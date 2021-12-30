@@ -1,0 +1,86 @@
+﻿using AutoMapper;
+using BLL.Interfaces;
+using BLL.Models.Account;
+using DAL.Entities.Account;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using PL.Filters;
+using PL.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PL.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [ModelStateActionFilter]
+    public class AccountController : ControllerBase
+    {
+        private readonly IUserService _userService;
+        private readonly JwtSettings _jwtSettings;
+        private readonly IMapper _mapper;
+
+        public AccountController(
+            IUserService userService,
+            IOptionsSnapshot<JwtSettings> jwtSettings,
+            IMapper mapper)
+        {
+            _userService = userService;
+            _jwtSettings = jwtSettings.Value;
+            _mapper = mapper;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            await _userService.Register(_mapper.Map<RegisterModel, Register>(model));
+
+            return Created(string.Empty, string.Empty);
+        }
+
+        [HttpPost("logon")]
+        public async Task<IActionResult> Logon(LogonModel model)
+        {
+            var user = await _userService.Logon(_mapper.Map<LogonModel, Logon>(model));
+
+            if (user is null) return BadRequest();
+
+            var roles = await _userService.GetRoles(user);
+
+            return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
+        }
+
+        [HttpPost("createRole")]
+        public async Task<IActionResult> CreateRole(CreateRoleModel model)
+        {
+            await _userService.CreateRole(model.RoleName);
+            return Ok();
+        }
+
+        [HttpGet("getRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            return Ok(await _userService.GetRoles());
+        }
+
+        [HttpPost("assignUserToRole")]
+        public async Task<IActionResult> AssignUserToRole(AssignUserToRoleModel model)
+        {
+            await _userService.AssignUserToRoles(_mapper.Map<AssignUserToRoleModel, AssignUserToRoles>(model));
+
+            return Ok();
+        }
+
+
+        [Authorize]
+        [Route("getlogin")]
+        public IActionResult GetLogin()
+        {
+            return Ok($"Ваш логин: {User.Identity.Name}");
+        }
+    }
+}

@@ -1,10 +1,27 @@
+using AutoMapper;
+using BLL.Infrastructure;
+using BLL.Interfaces;
+using BLL.Services;
+using DAL;
+using DAL.Context;
+using DAL.Entities;
+using DAL.Interfaces;
+using DAL.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using PL.Filters;
+using PL.Helpers;
+using System;
+using System.Text;
 
 namespace PL
 {
@@ -20,7 +37,57 @@ namespace PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AccountingDB")));
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            services.AddIdentity<Person, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 5;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<IPersonSkillRepository, PersonSkillRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IUserService, UserService>();
+
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+            services
+                .AddAuthorization()
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddControllers(options => { options.Filters.Add<CustomExceptionFilterAttribute>(); });
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -50,6 +117,8 @@ namespace PL
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
