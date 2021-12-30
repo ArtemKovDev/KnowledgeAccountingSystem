@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models.Account;
-using DAL.Entities.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PL.Filters;
 using PL.Helpers;
+using PL.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +77,7 @@ namespace PL.Controllers
 
 
         [Authorize]
-        [Route("getlogin")]
+        [HttpGet("getlogin")]
         public IActionResult GetLogin()
         {
             return Ok($"Ваш логин: {User.Identity.Name}");

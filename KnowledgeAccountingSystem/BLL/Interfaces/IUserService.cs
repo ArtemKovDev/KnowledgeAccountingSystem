@@ -1,5 +1,5 @@
-﻿using DAL.Entities;
-using DAL.Entities.Account;
+﻿using BLL.Models.Account;
+using DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;

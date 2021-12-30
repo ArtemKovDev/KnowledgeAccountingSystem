@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BLL.Models.Account
+namespace PL.ViewModels.Account
 {
     public class CreateRoleModel
     {

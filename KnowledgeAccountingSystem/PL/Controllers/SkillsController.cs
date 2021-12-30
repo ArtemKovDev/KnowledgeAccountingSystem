@@ -1,8 +1,10 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Interfaces;
 using BLL.Models;
 using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 using PL.Filters;
+using PL.ViewModels.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,11 @@ namespace PL.Controllers
     public class SkillsController : ControllerBase
     {
         private readonly ISkillService _service;
-        public SkillsController(ISkillService service)
+        private readonly IMapper _mapper;
+        public SkillsController(ISkillService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         // GET: api/<SkillsController>
@@ -38,11 +42,11 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(SkillModel skill)
+        public async Task<IActionResult> Post(CreateSkillModel skill)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(skill);
+                await _service.AddAsync(_mapper.Map<CreateSkillModel, SkillModel>(skill));
                 return Ok(skill);
             }
             return BadRequest(ModelState);

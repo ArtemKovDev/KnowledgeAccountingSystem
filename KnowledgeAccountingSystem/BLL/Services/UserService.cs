@@ -1,6 +1,6 @@
 ﻿using BLL.Interfaces;
+using BLL.Models.Account;
 using DAL.Entities;
-using DAL.Entities.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

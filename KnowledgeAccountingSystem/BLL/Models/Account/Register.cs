@@ -1,4 +1,4 @@
-﻿namespace DAL.Entities.Account
+﻿namespace BLL.Models.Account
 {
     public class Register
     {

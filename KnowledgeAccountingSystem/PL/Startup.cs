@@ -18,9 +18,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using PL.Filters;
 using PL.Helpers;
+using PL.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PL
@@ -55,6 +58,7 @@ namespace PL
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutomapperProfile());
+                mc.AddProfile(new ViewAutomapperProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -88,6 +92,34 @@ namespace PL
 
             services.AddControllers(options => { options.Filters.Add<CustomExceptionFilterAttribute>(); });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT containing userid claim",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                });
+                var security =
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Id = "Bearer",
+                                    Type = ReferenceType.SecurityScheme
+                                },
+                                UnresolvedReference = true
+                            },
+                            new List<string>()
+                        }
+                    };
+                c.AddSecurityRequirement(security);
+            });
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -101,6 +133,9 @@ namespace PL
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
             else
             {
