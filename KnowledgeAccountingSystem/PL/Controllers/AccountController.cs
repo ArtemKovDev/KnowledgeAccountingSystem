@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
+using BLL.Models;
 using BLL.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -77,10 +78,32 @@ namespace PL.Controllers
 
 
         [Authorize]
-        [HttpGet("getlogin")]
+        [HttpGet("getLogin")]
         public IActionResult GetLogin()
         {
             return Ok($"Ваш логин: {User.Identity.Name}");
+        }
+
+        [Authorize]
+        [HttpGet("getCurrentUserRoles")]
+        public async Task<IEnumerable<string>> GetCurrentUserRoles()
+        {
+            return await _userService.GetUserRoles(User);
+        }
+
+        [Authorize]
+        [HttpGet("getCurrentUserSkills")]
+        public IEnumerable<SkillModel> GetCurrentUserSkills()
+        {
+            return _userService.GetUserSkills(User);
+        }
+
+        [Authorize]
+        [HttpPost("addCurrentUserSkill")]
+        public IActionResult AddCurrentUserSkill(SkillModel skillModel)
+        {
+            _userService.AddCurrentUserSkill(User, skillModel);
+            return Ok(skillModel);
         }
     }
 }

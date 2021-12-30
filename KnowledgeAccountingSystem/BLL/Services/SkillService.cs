@@ -13,8 +13,8 @@ namespace BLL.Services
 {
     public class SkillService : ISkillService
     {
-        protected readonly IUnitOfWork _unitOfWork;
-        protected readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public SkillService(IUnitOfWork unitOfWork, IMapper mapper)
         {

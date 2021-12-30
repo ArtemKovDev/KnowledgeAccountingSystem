@@ -14,7 +14,6 @@ namespace BLL.Infrastructure
         public AutomapperProfile()
         {
             CreateMap<Skill, SkillModel>()
-                .ForMember(dest => dest.PersonIds, opt => opt.MapFrom(src => src.Persons.Select(x => x.PersonId)))
                 .ReverseMap();
         }
     }

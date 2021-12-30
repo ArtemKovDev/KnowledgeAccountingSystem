@@ -1,12 +1,16 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Interfaces;
+using BLL.Models;
 using BLL.Models.Account;
 using DAL.Entities;
+using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -15,12 +19,18 @@ namespace BLL.Services
     {
         private readonly UserManager<Person> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public UserService(UserManager<Person> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task Register(Register user)
@@ -81,6 +91,31 @@ namespace BLL.Services
         public async Task<IEnumerable<string>> GetRoles(Person user)
         {
             return (await _userManager.GetRolesAsync(user)).ToList();
+        }
+
+        public async Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal)
+        {
+            Person user = await _userManager.GetUserAsync(claimsPrincipal);
+            return (await _userManager.GetRolesAsync(user)).ToList();
+        }
+
+        public IEnumerable<SkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal)
+        {
+            var userId = _userManager.GetUserId(claimsPrincipal);
+            var skills = _unitOfWork.PersonSkillRepository.GetAllWithDetails().Where(ps => ps.PersonId == userId).Select(ps=>ps.Skill).ToList();
+
+            return _mapper.Map<List<Skill>, List<SkillModel>>(skills);    
+        }
+
+        public void AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, SkillModel skillModel)
+        {
+            var userId = _userManager.GetUserId(claimsPrincipal);
+            var skill = _mapper.Map<SkillModel, Skill>(skillModel);
+            if (_unitOfWork.SkillRepository.FindAll().Select(s=>s.Id).Contains(skill.Id))
+            {
+                _unitOfWork.PersonSkillRepository.AddAsync(new PersonSkill { PersonId = userId, SkillId = skill.Id});
+                _unitOfWork.SaveAsync();
+            }
         }
     }
 }

@@ -12,7 +12,5 @@ namespace BLL.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public ICollection<string> PersonIds { get; set; }
     }
 }

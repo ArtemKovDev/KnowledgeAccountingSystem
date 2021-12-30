@@ -11,8 +11,6 @@ namespace DAL.Entities
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string KnowledgeLevel { get; set; }
-
         public string PersonId { get; set; }
 
         public int SkillId { get; set; }
