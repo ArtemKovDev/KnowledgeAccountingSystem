@@ -21,16 +21,19 @@ namespace PL.Controllers
     [ModelStateActionFilter]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
+        private readonly IRoleService _roleService;
         private readonly JwtSettings _jwtSettings;
         private readonly IMapper _mapper;
 
         public AccountController(
-            IUserService userService,
+            IAccountService accountService,
+            IRoleService roleService,
             IOptionsSnapshot<JwtSettings> jwtSettings,
             IMapper mapper)
         {
-            _userService = userService;
+            _accountService = accountService;
+            _roleService = roleService;
             _jwtSettings = jwtSettings.Value;
             _mapper = mapper;
         }
@@ -38,7 +41,7 @@ namespace PL.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            await _userService.Register(_mapper.Map<RegisterModel, Register>(model));
+            await _accountService.Register(_mapper.Map<RegisterModel, Register>(model));
 
             return Created(string.Empty, string.Empty);
         }
@@ -46,64 +49,13 @@ namespace PL.Controllers
         [HttpPost("logon")]
         public async Task<IActionResult> Logon(LogonModel model)
         {
-            var user = await _userService.Logon(_mapper.Map<LogonModel, Logon>(model));
+            var user = await _accountService.Logon(_mapper.Map<LogonModel, Logon>(model));
 
             if (user is null) return BadRequest();
 
-            var roles = await _userService.GetRoles(user);
+            var roles = await _roleService.GetRoles(user);
 
             return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
-        }
-
-        [HttpPost("createRole")]
-        public async Task<IActionResult> CreateRole(CreateRoleModel model)
-        {
-            await _userService.CreateRole(model.RoleName);
-            return Ok();
-        }
-
-        [HttpGet("getRoles")]
-        public async Task<IActionResult> GetRoles()
-        {
-            return Ok(await _userService.GetRoles());
-        }
-
-        [HttpPost("assignUserToRole")]
-        public async Task<IActionResult> AssignUserToRole(AssignUserToRoleModel model)
-        {
-            await _userService.AssignUserToRoles(_mapper.Map<AssignUserToRoleModel, AssignUserToRoles>(model));
-
-            return Ok();
-        }
-
-
-        [Authorize]
-        [HttpGet("getLogin")]
-        public IActionResult GetLogin()
-        {
-            return Ok($"Ваш логин: {User.Identity.Name}");
-        }
-
-        [Authorize]
-        [HttpGet("getCurrentUserRoles")]
-        public async Task<IEnumerable<string>> GetCurrentUserRoles()
-        {
-            return await _userService.GetUserRoles(User);
-        }
-
-        [Authorize]
-        [HttpGet("getCurrentUserSkills")]
-        public IEnumerable<SkillModel> GetCurrentUserSkills()
-        {
-            return _userService.GetUserSkills(User);
-        }
-
-        [Authorize]
-        [HttpPost("addCurrentUserSkill")]
-        public IActionResult AddCurrentUserSkill(SkillModel skillModel)
-        {
-            _userService.AddCurrentUserSkill(User, skillModel);
-            return Ok(skillModel);
         }
     }
 }

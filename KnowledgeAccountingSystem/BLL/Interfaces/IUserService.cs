@@ -10,14 +10,9 @@ namespace BLL.Interfaces
 {
     public interface IUserService
     {
-        Task Register(Register user);
-        Task<Person> Logon(Logon logon);
-        Task AssignUserToRoles(AssignUserToRoles assignUserToRoles);
-        Task CreateRole(string roleName);
-        Task<IEnumerable<string>> GetRoles(Person user);
-        Task<IEnumerable<IdentityRole>> GetRoles();
         Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal);
         IEnumerable<SkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal);
-        void AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, SkillModel skillModel);
+        bool AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId);
+        bool DeleteCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId);
     }
 }

@@ -67,6 +67,8 @@ namespace PL
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
 
             services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
 
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();

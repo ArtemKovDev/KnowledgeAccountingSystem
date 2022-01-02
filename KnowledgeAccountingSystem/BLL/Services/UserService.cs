@@ -33,66 +33,6 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task Register(Register user)
-        {
-            var result = await _userManager.CreateAsync(new Person
-            {
-                Email = user.Email,
-                UserName = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PlaceOfWork = user.PlaceOfWork,
-                Education = user.Education
-            }, user.Password);
-
-            if (!result.Succeeded)
-            {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
-            }
-        }
-
-        public async Task<Person> Logon(Logon logon)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == logon.Email);
-            if (user is null) throw new System.Exception($"User not found: '{logon.Email}'.");
-
-            return await _userManager.CheckPasswordAsync(user, logon.Password) ? user : null;
-        }
-
-        public async Task AssignUserToRoles(AssignUserToRoles assignUserToRoles)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
-            var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
-                .Select(r => r.NormalizedName).ToList();
-
-            var result = await _userManager.AddToRolesAsync(user, roles); // THROWS
-
-            if (!result.Succeeded)
-            {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
-            }
-        }
-
-        public async Task CreateRole(string roleName)
-        {
-            var result = await _roleManager.CreateAsync(new IdentityRole(roleName));
-
-            if (!result.Succeeded)
-            {
-                throw new System.Exception($"Role could not be created: {roleName}.");
-            }
-        }
-
-        public async Task<IEnumerable<IdentityRole>> GetRoles()
-        {
-            return await _roleManager.Roles.ToListAsync();
-        }
-
-        public async Task<IEnumerable<string>> GetRoles(Person user)
-        {
-            return (await _userManager.GetRolesAsync(user)).ToList();
-        }
-
         public async Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal)
         {
             Person user = await _userManager.GetUserAsync(claimsPrincipal);
@@ -107,15 +47,30 @@ namespace BLL.Services
             return _mapper.Map<List<Skill>, List<SkillModel>>(skills);    
         }
 
-        public void AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, SkillModel skillModel)
+        public bool AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId)
         {
             var userId = _userManager.GetUserId(claimsPrincipal);
-            var skill = _mapper.Map<SkillModel, Skill>(skillModel);
-            if (_unitOfWork.SkillRepository.FindAll().Select(s=>s.Id).Contains(skill.Id))
+            if (_unitOfWork.SkillRepository.FindAll().Select(s=>s.Id).Contains(skillId))
             {
-                _unitOfWork.PersonSkillRepository.AddAsync(new PersonSkill { PersonId = userId, SkillId = skill.Id});
+                _unitOfWork.PersonSkillRepository.AddAsync(new PersonSkill { PersonId = userId, SkillId = skillId});
                 _unitOfWork.SaveAsync();
+                return true;
             }
+            return false;
+        }
+
+        public bool DeleteCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId)
+        {
+            var userId = _userManager.GetUserId(claimsPrincipal);
+
+            var ps = _unitOfWork.PersonSkillRepository.FindAll().FirstOrDefault(ps => ps.PersonId == userId && ps.SkillId == skillId);
+            if (ps != null)
+            { 
+                _unitOfWork.PersonSkillRepository.Delete(ps);
+                _unitOfWork.SaveAsync();
+                return true;
+            }
+            return false;
         }
     }
 }
