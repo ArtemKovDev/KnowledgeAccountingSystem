@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class Person : IdentityUser
+    public class User : IdentityUser
     {
         public string FirstName { get; set; }
 
@@ -15,6 +15,6 @@ namespace DAL.Entities
 
         public string Education { get; set; }
 
-        public ICollection<PersonSkill> Skills { get; set; }       
+        public ICollection<UserSkill> Skills { get; set; }       
     }
 }

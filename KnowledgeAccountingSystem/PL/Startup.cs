@@ -46,13 +46,13 @@ namespace PL
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-            services.AddIdentity<Person, IdentityRole>(options =>
+            services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 5;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ISkillRepository, SkillRepository>();
-            services.AddScoped<IPersonSkillRepository, PersonSkillRepository>();
+            services.AddScoped<IUserSkillRepository, UserSkillRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var mapperConfig = new MapperConfiguration(mc =>

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "manager")]
     [CustomExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]

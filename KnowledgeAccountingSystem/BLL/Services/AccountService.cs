@@ -13,10 +13,10 @@ namespace BLL.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<Person> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public AccountService(UserManager<Person> userManager,
+        public AccountService(UserManager<User> userManager,
             IMapper mapper)
         {
             _userManager = userManager;
@@ -25,7 +25,7 @@ namespace BLL.Services
 
         public async Task Register(Register user)
         {
-            var result = await _userManager.CreateAsync(new Person
+            var result = await _userManager.CreateAsync(new User
             {
                 Email = user.Email,
                 UserName = user.Email,
@@ -41,7 +41,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task<Person> Logon(Logon logon)
+        public async Task<User> Logon(Logon logon)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == logon.Email);
             if (user is null) throw new System.Exception($"User not found: '{logon.Email}'.");
@@ -63,7 +63,7 @@ namespace BLL.Services
         public IEnumerable<UserModel> GetUsers()
         {
             var users = _userManager.Users.ToList();
-            return _mapper.Map<List<Person>, List<UserModel>>(users);
+            return _mapper.Map<List<User>, List<UserModel>>(users);
         }
     }
 }

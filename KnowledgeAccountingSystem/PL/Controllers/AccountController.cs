@@ -43,6 +43,8 @@ namespace PL.Controllers
         {
             await _accountService.Register(_mapper.Map<RegisterModel, Register>(model));
 
+            await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(new UserRolesModel { Email = model.Email, Roles = new string[]{ "user" } }));
+
             return Created(string.Empty, string.Empty);
         }
 
@@ -58,7 +60,7 @@ namespace PL.Controllers
             return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "manager")]
         [HttpDelete("deleteUser")]
         public async Task<IActionResult> DeleteUser(DeleteUserModel model)
         {
@@ -66,7 +68,7 @@ namespace PL.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "manager")]
         [HttpGet("getUsers")]
         public IEnumerable<UserModel> GetUsers()
         {

@@ -13,7 +13,7 @@ namespace DAL
     {
         private ApplicationDbContext db;
         private SkillRepository skillRepository;
-        private PersonSkillRepository personSkillRepository;
+        private UserSkillRepository userSkillRepository;
 
         public UnitOfWork(DbContextOptions<ApplicationDbContext> options)
         {
@@ -29,13 +29,13 @@ namespace DAL
                 return skillRepository;
             }
         }
-        public IPersonSkillRepository PersonSkillRepository
+        public IUserSkillRepository UserSkillRepository
         {
             get
             {
-                if (personSkillRepository == null)
-                    personSkillRepository = new PersonSkillRepository(db);
-                return personSkillRepository;
+                if (userSkillRepository == null)
+                    userSkillRepository = new UserSkillRepository(db);
+                return userSkillRepository;
             }
         }
 

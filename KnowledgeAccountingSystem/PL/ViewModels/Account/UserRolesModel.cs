@@ -2,7 +2,7 @@
 
 namespace PL.ViewModels.Account
 {
-    public class AssignUserToRoleModel
+    public class UserRolesModel
     {
         [Required]
         public string Email { get; set; }

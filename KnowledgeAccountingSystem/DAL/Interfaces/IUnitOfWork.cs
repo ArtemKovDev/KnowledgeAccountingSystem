@@ -9,7 +9,7 @@ namespace DAL.Interfaces
     {
         ISkillRepository SkillRepository { get; }
 
-        IPersonSkillRepository PersonSkillRepository { get; }
+        IUserSkillRepository UserSkillRepository { get; }
 
         Task<int> SaveAsync();
     }

@@ -15,17 +15,17 @@ namespace BLL.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly UserManager<Person> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleService(UserManager<Person> userManager,
+        public RoleService(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        public async Task AssignUserToRoles(AssignUserToRoles assignUserToRoles)
+        public async Task AssignUserToRoles(UserRoles assignUserToRoles)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
             var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
@@ -39,10 +39,10 @@ namespace BLL.Services
             }
         }
 
-        public async Task RemoveUserFromRoles(AssignUserToRoles assignUserToRoles)
+        public async Task RemoveUserFromRoles(UserRoles removeUserFromRoles)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
-            var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == removeUserFromRoles.Email);
+            var roles = _roleManager.Roles.ToList().Where(r => removeUserFromRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
 
             var result = await _userManager.RemoveFromRolesAsync(user, roles);
@@ -79,7 +79,7 @@ namespace BLL.Services
             return await _roleManager.Roles.ToListAsync();
         }
 
-        public async Task<IEnumerable<string>> GetRoles(Person user)
+        public async Task<IEnumerable<string>> GetRoles(User user)
         {
             return (await _userManager.GetRolesAsync(user)).ToList();
         }

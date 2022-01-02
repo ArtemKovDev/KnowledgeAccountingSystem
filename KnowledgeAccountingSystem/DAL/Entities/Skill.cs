@@ -15,6 +15,6 @@ namespace DAL.Entities
 
         public string Description { get; set; }
 
-        public ICollection<PersonSkill> Persons { get; set; }
+        public ICollection<UserSkill> Users { get; set; }
     }
 }

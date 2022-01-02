@@ -10,7 +10,7 @@ namespace BLL.Interfaces
     public interface IAccountService
     {
         Task Register(Register user);
-        Task<Person> Logon(Logon logon);
+        Task<User> Logon(Logon logon);
         Task DeleteUser(string email);
         IEnumerable<UserModel> GetUsers();
     }

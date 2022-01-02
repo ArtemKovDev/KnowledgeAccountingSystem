@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase
@@ -49,17 +49,17 @@ namespace PL.Controllers
         }
 
         [HttpPost("assignUserToRole")]
-        public async Task<IActionResult> AssignUserToRole(AssignUserToRoleModel model)
+        public async Task<IActionResult> AssignUserToRole(UserRolesModel model)
         {
-            await _roleService.AssignUserToRoles(_mapper.Map<AssignUserToRoleModel, AssignUserToRoles>(model));
+            await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
 
             return Ok();
         }
 
         [HttpDelete("removeUserFromRole")]
-        public async Task<IActionResult> RemoveUserFromRole(AssignUserToRoleModel model)
+        public async Task<IActionResult> RemoveUserFromRole(UserRolesModel model)
         {
-            await _roleService.RemoveUserFromRoles(_mapper.Map<AssignUserToRoleModel, AssignUserToRoles>(model));
+            await _roleService.RemoveUserFromRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
 
             return Ok();
         }

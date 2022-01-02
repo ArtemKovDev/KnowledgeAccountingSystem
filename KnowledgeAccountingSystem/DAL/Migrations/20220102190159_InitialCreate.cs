@@ -171,46 +171,60 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonSkills",
+                name: "UserSkills",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KnowledgeLevel = table.Column<string>(nullable: true),
-                    PersonId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     SkillId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonSkills", x => x.Id);
+                    table.PrimaryKey("PK_UserSkills", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonSkills_AspNetUsers_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersonSkills_Skills_SkillId",
+                        name: "FK_UserSkills_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserSkills_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
-                table: "Skills",
-                columns: new[] { "Id", "Description", "Name" },
-                values: new object[] { 1, "Script Language for WeB", "PHP" });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "7c9e6679-7425-40de-944b-e07fc1f90ae7", "ebc4b355-75de-48bc-a105-f909ec618e88", "user", "USER" },
+                    { "ad376a8f-9eab-4bb9-9fca-30b01540f445", "7cd5b110-9e34-4aff-92b8-27eab99bb893", "manager", "MANAGER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Education", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PlaceOfWork", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "35210581-4d7e-40f1-936f-7b33b33c71f4", null, "manager@gmail.com", false, null, null, false, null, "MANAGER@GMAIL.COM", "MANAGER@GMAIL.COM", "AQAAAAEAACcQAAAAEFp/nz6V/F7giRVFrjwUdFXB8b+0xfTAJft6GkwXmLic6P7CKHFwgUEqgY5PBCOHbg==", null, false, null, "", false, "manager@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Skills",
                 columns: new[] { "Id", "Description", "Name" },
-                values: new object[] { 2, "OOP Language for WeB", "C#" });
+                values: new object[,]
+                {
+                    { 1, "Script Language for WeB", "PHP" },
+                    { 2, "OOP Language for WeB", "C#" },
+                    { 3, "Script Language for WeB", "Python" },
+                    { 4, "Language for system", "C" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Skills",
-                columns: new[] { "Id", "Description", "Name" },
-                values: new object[] { 3, "Script Language for WeB", "Python" });
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "ad376a8f-9eab-4bb9-9fca-30b01540f445" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -252,14 +266,14 @@ namespace DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonSkills_PersonId",
-                table: "PersonSkills",
-                column: "PersonId");
+                name: "IX_UserSkills_SkillId",
+                table: "UserSkills",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonSkills_SkillId",
-                table: "PersonSkills",
-                column: "SkillId");
+                name: "IX_UserSkills_UserId",
+                table: "UserSkills",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -280,16 +294,16 @@ namespace DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PersonSkills");
+                name: "UserSkills");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Skills");
 
             migrationBuilder.DropTable(
-                name: "Skills");
+                name: "AspNetUsers");
         }
     }
 }

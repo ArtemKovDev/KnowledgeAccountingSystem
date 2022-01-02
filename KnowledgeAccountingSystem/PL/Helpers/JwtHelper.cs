@@ -11,7 +11,7 @@ namespace PL.Helpers
 {
     public static class JwtHelper
     {
-        public static string GenerateJwt(Person user, IEnumerable<string> roles, JwtSettings jwtSettings)
+        public static string GenerateJwt(User user, IEnumerable<string> roles, JwtSettings jwtSettings)
         {
             if (user is null) throw new Exception($"Jwt generation not proceeded - {nameof(user)} is null");
 

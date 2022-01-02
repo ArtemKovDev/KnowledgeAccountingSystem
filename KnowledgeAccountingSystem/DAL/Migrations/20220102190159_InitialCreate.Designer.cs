@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211229165940_InitialCreate")]
+    [Migration("20220102190159_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,51 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entities.Person", b =>
+            modelBuilder.Entity("DAL.Entities.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Script Language for WeB",
+                            Name = "PHP"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "OOP Language for WeB",
+                            Name = "C#"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Script Language for WeB",
+                            Name = "Python"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Language for system",
+                            Name = "C"
+                        });
+                });
+
+            modelBuilder.Entity("DAL.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -96,69 +140,46 @@ namespace DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("DAL.Entities.PersonSkill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("KnowledgeLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PersonId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("PersonSkills");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skills");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Description = "Script Language for WeB",
-                            Name = "PHP"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "OOP Language for WeB",
-                            Name = "C#"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Script Language for WeB",
-                            Name = "Python"
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "35210581-4d7e-40f1-936f-7b33b33c71f4",
+                            Email = "manager@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MANAGER@GMAIL.COM",
+                            NormalizedUserName = "MANAGER@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFp/nz6V/F7giRVFrjwUdFXB8b+0xfTAJft6GkwXmLic6P7CKHFwgUEqgY5PBCOHbg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "manager@gmail.com"
                         });
+                });
+
+            modelBuilder.Entity("DAL.Entities.UserSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SkillId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSkills");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -186,6 +207,22 @@ namespace DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+                            ConcurrencyStamp = "ebc4b355-75de-48bc-a105-f909ec618e88",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "ad376a8f-9eab-4bb9-9fca-30b01540f445",
+                            ConcurrencyStamp = "7cd5b110-9e34-4aff-92b8-27eab99bb893",
+                            Name = "manager",
+                            NormalizedName = "MANAGER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -271,6 +308,13 @@ namespace DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            RoleId = "ad376a8f-9eab-4bb9-9fca-30b01540f445"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -292,17 +336,17 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DAL.Entities.PersonSkill", b =>
+            modelBuilder.Entity("DAL.Entities.UserSkill", b =>
                 {
-                    b.HasOne("DAL.Entities.Person", "Person")
-                        .WithMany("Skills")
-                        .HasForeignKey("PersonId");
-
                     b.HasOne("DAL.Entities.Skill", "Skill")
-                        .WithMany("Persons")
+                        .WithMany("Users")
                         .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithMany("Skills")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -316,7 +360,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("DAL.Entities.Person", null)
+                    b.HasOne("DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,7 +369,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("DAL.Entities.Person", null)
+                    b.HasOne("DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -340,7 +384,7 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Entities.Person", null)
+                    b.HasOne("DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -349,7 +393,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("DAL.Entities.Person", null)
+                    b.HasOne("DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

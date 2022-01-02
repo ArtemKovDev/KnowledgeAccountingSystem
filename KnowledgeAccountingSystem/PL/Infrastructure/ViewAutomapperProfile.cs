@@ -14,7 +14,7 @@ namespace PL.Infrastructure
     {
         public ViewAutomapperProfile()
         {
-            CreateMap<AssignUserToRoleModel, AssignUserToRoles>();
+            CreateMap<UserRolesModel, UserRoles>();
             CreateMap<LogonModel, Logon>();
             CreateMap<RegisterModel, Register>();
             CreateMap<CreateSkillModel, SkillModel>();
