@@ -57,5 +57,20 @@ namespace PL.Controllers
 
             return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
         }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpDelete("deleteUser")]
+        public async Task<IActionResult> DeleteUser(DeleteUserModel model)
+        {
+            await _accountService.DeleteUser(model.Email);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpGet("getUsers")]
+        public IEnumerable<UserModel> GetUsers()
+        {
+            return _accountService.GetUsers();
+        }
     }
 }

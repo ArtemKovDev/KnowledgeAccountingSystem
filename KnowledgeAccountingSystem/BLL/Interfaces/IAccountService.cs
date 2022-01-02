@@ -11,5 +11,7 @@ namespace BLL.Interfaces
     {
         Task Register(Register user);
         Task<Person> Logon(Logon logon);
+        Task DeleteUser(string email);
+        IEnumerable<UserModel> GetUsers();
     }
 }

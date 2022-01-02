@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using BLL.Models;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PL.Filters;
 using PL.ViewModels.Skills;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     [CustomExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]

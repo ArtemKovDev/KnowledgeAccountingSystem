@@ -1,4 +1,5 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Interfaces;
 using BLL.Models.Account;
 using DAL.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -13,13 +14,13 @@ namespace BLL.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<Person> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IMapper _mapper;
 
         public AccountService(UserManager<Person> userManager,
-            RoleManager<IdentityRole> roleManager)
+            IMapper mapper)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
+            _mapper = mapper;
         }
 
         public async Task Register(Register user)
@@ -46,6 +47,23 @@ namespace BLL.Services
             if (user is null) throw new System.Exception($"User not found: '{logon.Email}'.");
 
             return await _userManager.CheckPasswordAsync(user, logon.Password) ? user : null;
+        }
+
+        public async Task DeleteUser(string email)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == email);
+            var result = await _userManager.DeleteAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
+            }
+        }
+
+        public IEnumerable<UserModel> GetUsers()
+        {
+            var users = _userManager.Users.ToList();
+            return _mapper.Map<List<Person>, List<UserModel>>(users);
         }
     }
 }

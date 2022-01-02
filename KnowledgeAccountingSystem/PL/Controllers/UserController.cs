@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "DefaultUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -25,12 +25,14 @@ namespace PL.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "DefaultUser, Administrator")]
         [HttpGet("getLogin")]
         public IActionResult GetLogin()
         {
             return Ok($"Ваш логин: {User.Identity.Name}");
         }
 
+        [Authorize(Roles = "DefaultUser, Administrator")]
         [HttpGet("getRoles")]
         public async Task<IActionResult> GetRoles()
         {
@@ -53,7 +55,7 @@ namespace PL.Controllers
             return BadRequest();
         }
 
-        [HttpPost("deleteSkill")]
+        [HttpDelete("deleteSkill")]
         public IActionResult DeleteSkill(int Id)
         {
             if (_userService.DeleteCurrentUserSkill(User, Id))

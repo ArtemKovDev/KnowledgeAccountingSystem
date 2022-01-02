@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PL.ViewModels.Account;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase
@@ -27,9 +29,16 @@ namespace PL.Controllers
         }
 
         [HttpPost("createRole")]
-        public async Task<IActionResult> CreateRole(CreateRoleModel model)
+        public async Task<IActionResult> CreateRole(RoleModel model)
         {
             await _roleService.CreateRole(model.RoleName);
+            return Ok();
+        }
+
+        [HttpDelete("deleteRole")]
+        public async Task<IActionResult> DeleteRole(RoleModel model)
+        {
+            await _roleService.DeleteRole(model.RoleName);
             return Ok();
         }
 
@@ -43,6 +52,14 @@ namespace PL.Controllers
         public async Task<IActionResult> AssignUserToRole(AssignUserToRoleModel model)
         {
             await _roleService.AssignUserToRoles(_mapper.Map<AssignUserToRoleModel, AssignUserToRoles>(model));
+
+            return Ok();
+        }
+
+        [HttpDelete("removeUserFromRole")]
+        public async Task<IActionResult> RemoveUserFromRole(AssignUserToRoleModel model)
+        {
+            await _roleService.RemoveUserFromRoles(_mapper.Map<AssignUserToRoleModel, AssignUserToRoles>(model));
 
             return Ok();
         }

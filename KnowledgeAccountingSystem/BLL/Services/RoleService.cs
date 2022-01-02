@@ -31,7 +31,21 @@ namespace BLL.Services
             var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
 
-            var result = await _userManager.AddToRolesAsync(user, roles); // THROWS
+            var result = await _userManager.AddToRolesAsync(user, roles); 
+
+            if (!result.Succeeded)
+            {
+                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
+            }
+        }
+
+        public async Task RemoveUserFromRoles(AssignUserToRoles assignUserToRoles)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
+            var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
+                .Select(r => r.NormalizedName).ToList();
+
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
 
             if (!result.Succeeded)
             {
@@ -46,6 +60,17 @@ namespace BLL.Services
             if (!result.Succeeded)
             {
                 throw new System.Exception($"Role could not be created: {roleName}.");
+            }
+        }
+
+        public async Task DeleteRole(string roleName)
+        {
+            var role = await _roleManager.FindByNameAsync(roleName);
+            var result = await _roleManager.DeleteAsync(role);
+
+            if (!result.Succeeded)
+            {
+                throw new System.Exception($"Role could not be deleted: {roleName}.");
             }
         }
 
