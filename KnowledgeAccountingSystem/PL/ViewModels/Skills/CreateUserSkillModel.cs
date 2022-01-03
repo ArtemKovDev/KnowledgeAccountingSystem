@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace PL.ViewModels.Skills
 {
-    public class CreateSkillModel
+    public class CreateUserSkillModel
     {
         [Required]
-        public string Name { get; set; }
+        public int SkillId { get; set; }
 
         [Required]
-        public string Description { get; set; }
-
-        [Required]
-        public int CategoryId { get; set; }
+        public int KnowledgeLevelId { get; set; }
     }
 }

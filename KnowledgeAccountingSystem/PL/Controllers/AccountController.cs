@@ -61,14 +61,6 @@ namespace PL.Controllers
         }
 
         [Authorize(Roles = "manager")]
-        [HttpDelete("deleteUser")]
-        public async Task<IActionResult> DeleteUser(DeleteUserModel model)
-        {
-            await _accountService.DeleteUser(model.Email);
-            return Ok();
-        }
-
-        [Authorize(Roles = "manager")]
         [HttpGet("getUsers")]
         public IEnumerable<UserModel> GetUsers()
         {

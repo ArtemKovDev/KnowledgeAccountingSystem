@@ -242,14 +242,14 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7c9e6679-7425-40de-944b-e07fc1f90ae7", "4ea7649f-f2a5-4402-82dd-cc6957f10509", "user", "USER" },
-                    { "ad376a8f-9eab-4bb9-9fca-30b01540f445", "7539bafc-ce87-41e1-8430-489dee933490", "manager", "MANAGER" }
+                    { "7c9e6679-7425-40de-944b-e07fc1f90ae7", "4c282116-f374-4054-bdcc-79265c2f6705", "user", "USER" },
+                    { "ad376a8f-9eab-4bb9-9fca-30b01540f445", "d2075bbd-d537-4ba0-baed-a30534991c45", "manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Education", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PlaceOfWork", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "e67c80ed-3aaf-41a8-bfba-249470ba2141", null, "manager@gmail.com", false, null, null, false, null, "MANAGER@GMAIL.COM", "MANAGER@GMAIL.COM", "AQAAAAEAACcQAAAAENwqVMeQcvzJ1NTbu4j7l4OQqv5FriUfn8C+MTh2pNbFoaqVMQzoJlA4sWYpycif9w==", null, false, null, "", false, "manager@gmail.com" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "e70e4141-9b50-4172-92aa-b7910187f1b7", null, "manager@gmail.com", false, null, null, false, null, "MANAGER@GMAIL.COM", "MANAGER@GMAIL.COM", "AQAAAAEAACcQAAAAEJJsPulBxXBXQRbtvKT+FDyxVhbHDTle8FwguJllt6KHHMm0LO0q152IonVx5sORcg==", null, false, null, "", false, "manager@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "KnowledgeLevels",

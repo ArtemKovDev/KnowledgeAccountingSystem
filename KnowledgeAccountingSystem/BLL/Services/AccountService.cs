@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using BLL.Models.Account;
 using DAL.Entities;
+using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -47,17 +48,6 @@ namespace BLL.Services
             if (user is null) throw new System.Exception($"User not found: '{logon.Email}'.");
 
             return await _userManager.CheckPasswordAsync(user, logon.Password) ? user : null;
-        }
-
-        public async Task DeleteUser(string email)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == email);
-            var result = await _userManager.DeleteAsync(user);
-
-            if (!result.Succeeded)
-            {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
-            }
         }
 
         public IEnumerable<UserModel> GetUsers()

@@ -18,6 +18,7 @@ namespace PL.Infrastructure
             CreateMap<LogonModel, Logon>();
             CreateMap<RegisterModel, Register>();
             CreateMap<CreateSkillModel, SkillModel>();
+            CreateMap<UpdateUserModel, UserModel>();
         }
     }
 }

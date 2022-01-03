@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220103010040_InitialCreate")]
+    [Migration("20220103165414_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -339,13 +339,13 @@ namespace DAL.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e67c80ed-3aaf-41a8-bfba-249470ba2141",
+                            ConcurrencyStamp = "e70e4141-9b50-4172-92aa-b7910187f1b7",
                             Email = "manager@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MANAGER@GMAIL.COM",
                             NormalizedUserName = "MANAGER@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENwqVMeQcvzJ1NTbu4j7l4OQqv5FriUfn8C+MTh2pNbFoaqVMQzoJlA4sWYpycif9w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJJsPulBxXBXQRbtvKT+FDyxVhbHDTle8FwguJllt6KHHMm0LO0q152IonVx5sORcg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -410,14 +410,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = "7c9e6679-7425-40de-944b-e07fc1f90ae7",
-                            ConcurrencyStamp = "4ea7649f-f2a5-4402-82dd-cc6957f10509",
+                            ConcurrencyStamp = "4c282116-f374-4054-bdcc-79265c2f6705",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "ad376a8f-9eab-4bb9-9fca-30b01540f445",
-                            ConcurrencyStamp = "7539bafc-ce87-41e1-8430-489dee933490",
+                            ConcurrencyStamp = "d2075bbd-d537-4ba0-baed-a30534991c45",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         });
