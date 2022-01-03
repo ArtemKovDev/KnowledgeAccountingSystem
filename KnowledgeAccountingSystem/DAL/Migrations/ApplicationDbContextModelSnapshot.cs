@@ -19,7 +19,7 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entities.Skill", b =>
+            modelBuilder.Entity("DAL.Entities.KnowledgeLevel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,32 +34,225 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("KnowledgeLevels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Basic theoretical knowledge",
+                            Name = "Beginner"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Good theoretical knowledge, practical skills",
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Excellent theoretical knowledge, practical skills, work experience of more than 1 year",
+                            Name = "Experienced"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Expert theoretical knowledge, practical skills, work experience more than 3 years, completed more than 1 project with key requirements for this skill",
+                            Name = "Expert"
+                        });
+                });
+
+            modelBuilder.Entity("DAL.Entities.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Skills");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "Script Language for WeB",
                             Name = "PHP"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "OOP Language for WeB",
+                            CategoryId = 1,
+                            Description = "OOP Language for web and desktop",
                             Name = "C#"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Script Language for WeB",
+                            CategoryId = 1,
+                            Description = "Script Language for WeB and Data Science",
                             Name = "Python"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Language for system",
-                            Name = "C"
+                            CategoryId = 1,
+                            Description = "Language for system programming",
+                            Name = "C++"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 1,
+                            Description = "OOP Language for web and desktop",
+                            Name = "Java"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 1,
+                            Description = "Structured query language for databases",
+                            Name = "SQL"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 2,
+                            Description = "A mobile operating system",
+                            Name = "Android"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 2,
+                            Description = "A mobile operating system",
+                            Name = "Mac OS"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 2,
+                            Description = "A desktop operating systems",
+                            Name = "Unix / Linux / Solaris"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 2,
+                            Description = "A desktop operating system",
+                            Name = "Windows"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 3,
+                            Description = "Microsoft's public cloud computing platform",
+                            Name = "AZURE"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 3,
+                            Description = "A comprehensive, evolving cloud computing platform",
+                            Name = "AMAZON"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            Description = "RDBMS developed by Microsoft Corporation",
+                            Name = "Microsoft SQL Server"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 4,
+                            Description = "RDBMS developed by Oracle Corporation",
+                            Name = "MySQL"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 4,
+                            Description = "Non-relational databases",
+                            Name = "NoSQL"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 5,
+                            Description = "The process of developing a mathematical coordinate-based representation of any surface of an object",
+                            Name = "3D Modelling"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 5,
+                            Description = "A process that is used to test the interface and functions of a website, application, mobile app or service",
+                            Name = "User Testing"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 5,
+                            Description = "Aims to improve a design's/product's aesthetic appeal and usability with suitable images, typography, space, layout and color.",
+                            Name = "Visual Design"
+                        });
+                });
+
+            modelBuilder.Entity("DAL.Entities.SkillCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SkillCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Programming languages"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Operating systems"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Platforms"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Databases"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Design"
                         });
                 });
 
@@ -144,13 +337,13 @@ namespace DAL.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "35210581-4d7e-40f1-936f-7b33b33c71f4",
+                            ConcurrencyStamp = "e67c80ed-3aaf-41a8-bfba-249470ba2141",
                             Email = "manager@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MANAGER@GMAIL.COM",
                             NormalizedUserName = "MANAGER@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFp/nz6V/F7giRVFrjwUdFXB8b+0xfTAJft6GkwXmLic6P7CKHFwgUEqgY5PBCOHbg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENwqVMeQcvzJ1NTbu4j7l4OQqv5FriUfn8C+MTh2pNbFoaqVMQzoJlA4sWYpycif9w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -165,6 +358,9 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("KnowledgeLevelId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SkillId")
                         .HasColumnType("int");
 
@@ -172,6 +368,8 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("KnowledgeLevelId");
 
                     b.HasIndex("SkillId");
 
@@ -210,14 +408,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = "7c9e6679-7425-40de-944b-e07fc1f90ae7",
-                            ConcurrencyStamp = "ebc4b355-75de-48bc-a105-f909ec618e88",
+                            ConcurrencyStamp = "4ea7649f-f2a5-4402-82dd-cc6957f10509",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "ad376a8f-9eab-4bb9-9fca-30b01540f445",
-                            ConcurrencyStamp = "7cd5b110-9e34-4aff-92b8-27eab99bb893",
+                            ConcurrencyStamp = "7539bafc-ce87-41e1-8430-489dee933490",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         });
@@ -334,8 +532,23 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Skill", b =>
+                {
+                    b.HasOne("DAL.Entities.SkillCategory", "Category")
+                        .WithMany("Skills")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Entities.UserSkill", b =>
                 {
+                    b.HasOne("DAL.Entities.KnowledgeLevel", "KnowledgeLevel")
+                        .WithMany("UserSkills")
+                        .HasForeignKey("KnowledgeLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Entities.Skill", "Skill")
                         .WithMany("Users")
                         .HasForeignKey("SkillId")

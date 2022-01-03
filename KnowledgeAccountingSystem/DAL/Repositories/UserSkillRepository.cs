@@ -55,7 +55,7 @@ namespace DAL.Repositories
 
         public IQueryable<UserSkill> GetAllWithDetails()
         {
-            return FindAll().Include(ps => ps.User).Include(ps => ps.Skill);
+            return FindAll().Include(ps => ps.User).Include(ps => ps.Skill).Include(ps => ps.KnowledgeLevel);
         }
     }
 }

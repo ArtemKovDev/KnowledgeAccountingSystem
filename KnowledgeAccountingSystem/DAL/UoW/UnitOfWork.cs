@@ -14,6 +14,8 @@ namespace DAL
         private ApplicationDbContext db;
         private SkillRepository skillRepository;
         private UserSkillRepository userSkillRepository;
+        private SkillCategoryRepository skillCategoryRepository;
+        private KnowledgeLevelRepository knowledgeLevelRepository;
 
         public UnitOfWork(DbContextOptions<ApplicationDbContext> options)
         {
@@ -36,6 +38,24 @@ namespace DAL
                 if (userSkillRepository == null)
                     userSkillRepository = new UserSkillRepository(db);
                 return userSkillRepository;
+            }
+        }
+        public ISkillCategoryRepository SkillCategoryRepository
+        {
+            get
+            {
+                if (skillCategoryRepository == null)
+                    skillCategoryRepository = new SkillCategoryRepository(db);
+                return skillCategoryRepository;
+            }
+        }
+        public IKnowledgeLevelRepository KnowledgeLevelRepository
+        {
+            get
+            {
+                if (knowledgeLevelRepository == null)
+                    knowledgeLevelRepository = new KnowledgeLevelRepository(db);
+                return knowledgeLevelRepository;
             }
         }
 

@@ -54,7 +54,7 @@ namespace DAL.Repositories
 
         public IQueryable<Skill> GetAllWithDetails()
         {
-            return FindAll().Include(s => s.Users);
+            return FindAll().Include(s => s.Users).Include(s => s.Category);
         }
 
         public async Task<Skill> GetByIdWithDetailsAsync(int id)

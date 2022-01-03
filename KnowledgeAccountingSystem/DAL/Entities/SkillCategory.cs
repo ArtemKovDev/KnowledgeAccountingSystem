@@ -6,20 +6,13 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class Skill
+    public class SkillCategory
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
-        public int CategoryId { get; set; }
-
-        [ForeignKey("CategoryId")]
-        public SkillCategory Category { get; set; }
-
-        public ICollection<UserSkill> Users { get; set; }
+        public ICollection<Skill> Skills { get; set; }
     }
 }
