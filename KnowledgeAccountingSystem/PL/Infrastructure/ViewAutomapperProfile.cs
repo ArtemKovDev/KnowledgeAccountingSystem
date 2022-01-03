@@ -2,6 +2,8 @@
 using BLL.Models;
 using BLL.Models.Account;
 using PL.ViewModels.Account;
+using PL.ViewModels.KnowledgeLevels;
+using PL.ViewModels.SkillCategories;
 using PL.ViewModels.Skills;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,8 @@ namespace PL.Infrastructure
             CreateMap<RegisterModel, Register>();
             CreateMap<CreateSkillModel, SkillModel>();
             CreateMap<UpdateUserModel, UserModel>();
+            CreateMap<CreateSkillCategoryModel, SkillCategoryModel>();
+            CreateMap<CreateKnowledgeLevelModel, KnowledgeLevelModel>();
         }
     }
 }

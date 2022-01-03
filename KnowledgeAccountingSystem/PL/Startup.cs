@@ -52,6 +52,8 @@ namespace PL
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<ISkillCategoryRepository, SkillCategoryRepository>();
+            services.AddScoped<IKnowledgeLevelRepository, KnowledgeLevelRepository>();
             services.AddScoped<IUserSkillRepository, UserSkillRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -67,9 +69,11 @@ namespace PL
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
 
             services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<ISkillCategoryService, SkillCategoryService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IKnowledgeLevelService, KnowledgeLevelService>();
 
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services

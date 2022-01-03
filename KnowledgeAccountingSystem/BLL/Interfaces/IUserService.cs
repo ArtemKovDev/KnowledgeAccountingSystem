@@ -13,7 +13,7 @@ namespace BLL.Interfaces
         UserModel GetCurrentUserCredentials(ClaimsPrincipal claimsPrincipal);
         Task UpdateCurrentUserCredentials(ClaimsPrincipal claimsPrincipal, UserModel userModel);
         Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal);
-        IEnumerable<SkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal);
+        IEnumerable<UserSkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal);
         bool AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId);
         bool DeleteCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId);
     }

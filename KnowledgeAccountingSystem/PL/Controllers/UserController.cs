@@ -64,7 +64,7 @@ namespace PL.Controllers
 
         [Authorize(Roles = "user")]
         [HttpPost("addSkill")]
-        public IActionResult AddSkill(CreateUserSkillModel userSkillModel)
+        public IActionResult AddSkill(UserSkillViewModel userSkillModel)
         {
             if(_userService.AddCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId))
             {
@@ -75,7 +75,7 @@ namespace PL.Controllers
 
         [Authorize(Roles = "user")]
         [HttpDelete("deleteSkill")]
-        public IActionResult DeleteSkill(CreateUserSkillModel userSkillModel)
+        public IActionResult DeleteSkill(UserSkillViewModel userSkillModel)
         {
             if (_userService.DeleteCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId))
             {

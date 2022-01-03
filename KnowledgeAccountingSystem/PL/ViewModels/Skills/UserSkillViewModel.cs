@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PL.ViewModels.Skills
 {
-    public class CreateUserSkillModel
+    public class UserSkillViewModel
     {
         [Required]
         public int SkillId { get; set; }

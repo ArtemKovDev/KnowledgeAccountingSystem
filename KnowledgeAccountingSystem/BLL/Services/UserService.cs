@@ -36,12 +36,22 @@ namespace BLL.Services
             return (await _userManager.GetRolesAsync(user)).ToList();
         }
 
-        public IEnumerable<SkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal)
+        public IEnumerable<UserSkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal)
         {
             var userId = _userManager.GetUserId(claimsPrincipal);
-            var skills = _unitOfWork.UserSkillRepository.GetAllWithDetails().Where(ps => ps.UserId == userId).Select(ps=>ps.Skill).ToList();
+            var userSkills = _unitOfWork.UserSkillRepository.GetAllWithDetails().Where(ps => ps.UserId == userId).ToList();
 
-            return _mapper.Map<List<Skill>, List<SkillModel>>(skills);    
+            foreach(var u in userSkills)
+            {
+                yield return new UserSkillModel()
+                {
+                    SkillId = u.Skill.Id,
+                    SkillName = u.Skill.Name,
+                    SkillDescription = u.Skill.Description,
+                    KnowledgeLevelId = u.KnowledgeLevel.Id,
+                    KnowledgeLevel = u.KnowledgeLevel.Name
+                };
+            }    
         }
 
         public bool AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId)

@@ -11,6 +11,10 @@ namespace DAL.Interfaces
 
         IUserSkillRepository UserSkillRepository { get; }
 
+        ISkillCategoryRepository SkillCategoryRepository { get; }
+
+        IKnowledgeLevelRepository KnowledgeLevelRepository { get; }
+
         Task<int> SaveAsync();
     }
 }
