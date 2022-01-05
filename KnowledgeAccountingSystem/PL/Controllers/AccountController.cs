@@ -41,7 +41,17 @@ namespace PL.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            await _accountService.Register(_mapper.Map<RegisterModel, Register>(model));
+            if (model == null || !ModelState.IsValid)
+                return BadRequest();
+
+            var result = await _accountService.Register(_mapper.Map<RegisterModel, Register>(model));
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description);
+
+                return BadRequest(new RegistrationResponseModel { Errors = errors, IsSuccessfulRegistration = false });
+            }
 
             await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(new UserRolesModel { Email = model.Email, Roles = new string[]{ "user" } }));
 

@@ -1,5 +1,6 @@
 ﻿using BLL.Models.Account;
 using DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface IAccountService
     {
-        Task Register(Register user);
+        Task<IdentityResult> Register(Register user);
         Task<User> Logon(Logon logon);
         IEnumerable<UserModel> GetUsers();
     }

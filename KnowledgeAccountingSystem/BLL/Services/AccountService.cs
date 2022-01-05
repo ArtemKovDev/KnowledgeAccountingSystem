@@ -24,7 +24,7 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task Register(Register user)
+        public async Task<IdentityResult> Register(Register user)
         {
             var result = await _userManager.CreateAsync(new User
             {
@@ -36,10 +36,7 @@ namespace BLL.Services
                 Education = user.Education
             }, user.Password);
 
-            if (!result.Succeeded)
-            {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
-            }
+            return result;
         }
 
         public async Task<User> Logon(Logon logon)

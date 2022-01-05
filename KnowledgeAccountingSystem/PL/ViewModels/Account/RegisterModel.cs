@@ -4,14 +4,13 @@ namespace PL.ViewModels.Account
 {
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
  
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         public string Password { get; set; }
  
-        [Required]
-        [Compare(nameof(Password))]
+        [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string PasswordConfirm { get; set; }
         [Required]
         public string FirstName { get; set; }

@@ -49,6 +49,7 @@ namespace PL
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 5;
+                options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ISkillRepository, SkillRepository>();
