@@ -3,6 +3,7 @@ import { AuthenticationService } from './../../shared/services/authentication.se
 import { PasswordConfirmationValidatorService } from './../../shared/services/password-confirmation-validator.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
@@ -12,9 +13,8 @@ export class RegisterUserComponent implements OnInit {
   public registerForm: FormGroup;
   public errorMessage: string = '';
   public showError: boolean;
-  public isRegistered: boolean = false;
-
-  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService) { }
+  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
+    private _router: Router) { }
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       firstName: new FormControl(''),
@@ -50,7 +50,7 @@ export class RegisterUserComponent implements OnInit {
     this._authService.registerUser(user)
     .subscribe(_ => {
       console.log("Successful registration");
-      this.isRegistered = true;
+      this._router.navigate(["/authentication/login"]);
     },
     error => {
         this.errorMessage = error;

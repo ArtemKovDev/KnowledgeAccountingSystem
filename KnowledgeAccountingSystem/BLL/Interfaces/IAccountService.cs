@@ -12,6 +12,6 @@ namespace BLL.Interfaces
     {
         Task<IdentityResult> Register(Register user);
         Task<User> Logon(Logon logon);
-        IEnumerable<UserModel> GetUsers();
+        IEnumerable<UserModel> GetUsers(FilterSearch filterSearch);
     }
 }

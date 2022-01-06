@@ -63,18 +63,20 @@ namespace PL.Controllers
         {
             var user = await _accountService.Logon(_mapper.Map<LogonModel, Logon>(model));
 
-            if (user is null) return BadRequest();
+            if (user is null) return Unauthorized(new AuthResponseModel { ErrorMessage = "Invalid Authentication" });
 
             var roles = await _roleService.GetRoles(user);
 
-            return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
+            var token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
+
+            return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token });
         }
 
         [Authorize(Roles = "manager")]
-        [HttpGet("getUsers")]
-        public IEnumerable<UserModel> GetUsers()
+        [HttpPost("getUsers")]
+        public IEnumerable<UserModel> GetUsers(FilterSearchModel filterSearchModel)
         {
-            return _accountService.GetUsers();
+            return _accountService.GetUsers(_mapper.Map<FilterSearchModel, FilterSearch>(filterSearchModel));
         }
     }
 }

@@ -23,6 +23,7 @@ namespace PL.Infrastructure
             CreateMap<UpdateUserModel, UserModel>();
             CreateMap<CreateSkillCategoryModel, SkillCategoryModel>();
             CreateMap<CreateKnowledgeLevelModel, KnowledgeLevelModel>();
+            CreateMap<FilterSearchModel, FilterSearch>();
         }
     }
 }

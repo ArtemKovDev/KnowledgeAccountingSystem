@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL.Models.Account
 {
-    public class UserModel
+    public class FilterSearch
     {
         public string Email { get; set; }
 

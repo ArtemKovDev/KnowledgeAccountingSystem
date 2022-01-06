@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BLL.Models.Account
+namespace PL.ViewModels.Account
 {
-    public class UserModel
+    public class FilterSearchModel
     {
         public string Email { get; set; }
 
