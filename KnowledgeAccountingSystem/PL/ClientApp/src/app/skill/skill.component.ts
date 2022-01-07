@@ -13,6 +13,7 @@ export class SkillComponent implements OnInit {
     skills: SkillModel[];                // массив товаров
     tableMode: boolean = true;          // табличный режим
  
+
     constructor(private skillService: SkillService) { }
  
     ngOnInit() {

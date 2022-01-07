@@ -3,5 +3,5 @@ export class SkillModel {
         public id?: number,
         public name?: string,
         public description?: string,
-        public categoryId?: number){ }   
+        public categoryId?: number) { }
 }

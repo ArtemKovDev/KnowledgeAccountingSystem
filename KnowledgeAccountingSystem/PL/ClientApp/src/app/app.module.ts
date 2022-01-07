@@ -13,6 +13,8 @@ import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { UserComponent } from './user/user.component';
 import { AuthGuard } from './shared/guards/auth/authguard';
 import { SkillComponent } from './skill/skill.component';
+import { SkillCategoryComponent } from './skillCategory/skillCategory.component';
+import { KnowledgeLevelComponent } from './knowledgeLevel/knowledgeLevel.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -25,7 +27,9 @@ export function tokenGetter() {
     NavMenuComponent,
     HomeComponent,
     UserComponent,
-    SkillComponent
+    SkillComponent,
+    SkillCategoryComponent,
+    KnowledgeLevelComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,7 +39,9 @@ export function tokenGetter() {
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
       { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
-      { path: 'skills', component: SkillComponent, canActivate: [AuthGuard]}
+      { path: 'skills', component: SkillComponent, canActivate: [AuthGuard]},
+      { path: 'skillcategories', component: SkillCategoryComponent, canActivate: [AuthGuard]},
+      { path: 'knowledgelevels', component: KnowledgeLevelComponent, canActivate: [AuthGuard]},
     ]),
     JwtModule.forRoot({
       config: {
