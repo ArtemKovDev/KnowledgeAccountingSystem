@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KnowledgeLevelModel } from '../_interfaces/skill/knowledgeLevelModel';
+import { KnowledgeLevelModel } from '../_models/skill/knowledgeLevelModel';
 import { KnowledgeLevelService } from '../shared/services/knowledgeLevel.service';
  
 @Component({

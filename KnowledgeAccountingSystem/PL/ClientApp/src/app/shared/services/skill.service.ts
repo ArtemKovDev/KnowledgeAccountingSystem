@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { SkillModel } from 'src/app/_interfaces/skill/skillModel';
+import { SkillModel } from 'src/app/_models/skill/skillModel';
  
 @Injectable()
 export class SkillService {

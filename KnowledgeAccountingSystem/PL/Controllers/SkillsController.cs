@@ -5,7 +5,6 @@ using BLL.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PL.Filters;
-using PL.ViewModels.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +21,9 @@ namespace PL.Controllers
     public class SkillsController : ControllerBase
     {
         private readonly ISkillService _service;
-        private readonly IMapper _mapper;
-        public SkillsController(ISkillService service, IMapper mapper)
+        public SkillsController(ISkillService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/<SkillsController>

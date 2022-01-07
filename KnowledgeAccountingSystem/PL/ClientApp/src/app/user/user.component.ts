@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
-import { UpdateUserModel } from '../_interfaces/user/updateUserModel';
-import { UserModel } from '../_interfaces/user/userModel';
-import { UserSkillModel } from '../_interfaces/user/userSkillModel';
-import { UserSkillViewModel } from '../_interfaces/user/userSkillViewModel';
+import { UpdateUserModel } from '../_models/user/updateUserModel';
+import { UserModel } from '../_models/user/userModel';
+import { UserSkillModel } from '../_models/user/userSkillModel';
 
 @Component({
     selector: 'user',

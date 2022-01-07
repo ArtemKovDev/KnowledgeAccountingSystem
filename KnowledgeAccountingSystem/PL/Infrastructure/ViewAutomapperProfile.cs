@@ -2,7 +2,6 @@
 using BLL.Models;
 using BLL.Models.Account;
 using PL.ViewModels.Account;
-using PL.ViewModels.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;

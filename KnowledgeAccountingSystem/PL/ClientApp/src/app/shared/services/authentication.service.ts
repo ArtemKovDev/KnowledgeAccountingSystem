@@ -1,7 +1,7 @@
-import { RegisterModel } from './../../_interfaces/user/registerModel.model'; 
-import { LogonModel } from './../../_interfaces/user/logonModel.model'; 
-import { RegistrationResponseModel } from './../../_interfaces/response/registrationResponseModel.model';
-import { AuthResponseModel } from './../../_interfaces/response/authResponseModel.model';
+import { RegisterModel } from '../../_models/user/registerModel.model'; 
+import { LogonModel } from '../../_models/user/logonModel.model'; 
+import { RegistrationResponseModel } from '../../_models/response/registrationResponseModel.model';
+import { AuthResponseModel } from '../../_models/response/authResponseModel.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -36,5 +36,12 @@ export class AuthenticationService {
     const token = localStorage.getItem("token");
  
     return token && !this._jwtHelper.isTokenExpired(token);
+  }
+
+  public isUserManager = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this._jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    return role === 'manager';
   }
 }

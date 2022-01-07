@@ -71,12 +71,5 @@ namespace PL.Controllers
 
             return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token });
         }
-
-        [Authorize(Roles = "manager")]
-        [HttpPost("getUsers")]
-        public IEnumerable<UserModel> GetUsers(FilterSearchModel filterSearchModel)
-        {
-            return _accountService.GetUsers(_mapper.Map<FilterSearchModel, FilterSearch>(filterSearchModel));
-        }
     }
 }

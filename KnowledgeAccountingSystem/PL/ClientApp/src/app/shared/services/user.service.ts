@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { UpdateUserModel } from 'src/app/_interfaces/user/updateUserModel';
-import { UserSkillViewModel } from 'src/app/_interfaces/user/userSkillViewModel';
+import { UpdateUserModel } from 'src/app/_models/user/updateUserModel';
+import { UserSkillModel } from 'src/app/_models/user/userSkillModel';
  
 @Injectable()
 export class UserService {
@@ -27,16 +27,16 @@ export class UserService {
         return this.http.get(this.url + "/getSkills");
     }
 
-    addSkill(userSkillViewModel: UserSkillViewModel) {
-        return this.http.post(this.url + "/addSkill", userSkillViewModel);
+    addSkill(userSkillModel: UserSkillModel) {
+        return this.http.post(this.url + "/addSkill", userSkillModel);
     }
 
-    deleteSkill(userSkillViewModel: UserSkillViewModel) {
+    deleteSkill(userSkillModel: UserSkillModel) {
         const options = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
             }),
-            body: userSkillViewModel
+            body: userSkillModel
           };
         return this.http.delete(this.url + '/deleteSkill', options);
     }

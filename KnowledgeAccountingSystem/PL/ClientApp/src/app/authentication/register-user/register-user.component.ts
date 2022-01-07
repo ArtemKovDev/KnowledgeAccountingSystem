@@ -1,4 +1,4 @@
-import { RegisterModel } from './../../_interfaces/user/registerModel.model';
+import { RegisterModel } from '../../_models/user/registerModel.model';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { PasswordConfirmationValidatorService } from './../../shared/services/password-confirmation-validator.service';
 import { Component, OnInit } from '@angular/core';

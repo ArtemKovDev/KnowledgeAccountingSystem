@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PL.Helpers;
 using PL.ViewModels.Account;
-using PL.ViewModels.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +63,7 @@ namespace PL.Controllers
 
         [Authorize(Roles = "user")]
         [HttpPost("addSkill")]
-        public IActionResult AddSkill(UserSkillViewModel userSkillModel)
+        public IActionResult AddSkill(UserSkillModel userSkillModel)
         {
             if(_userService.AddCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId))
             {
@@ -75,7 +74,7 @@ namespace PL.Controllers
 
         [Authorize(Roles = "user")]
         [HttpDelete("deleteSkill")]
-        public IActionResult DeleteSkill(UserSkillViewModel userSkillModel)
+        public IActionResult DeleteSkill(UserSkillModel userSkillModel)
         {
             if (_userService.DeleteCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId))
             {

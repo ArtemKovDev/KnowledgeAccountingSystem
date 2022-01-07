@@ -1,4 +1,4 @@
-import { LogonModel } from './../../_interfaces/user/logonModel.model';
+import { LogonModel } from '../../_models/user/logonModel.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { KnowledgeLevelModel } from 'src/app/_interfaces/skill/knowledgeLevelModel';
+import { KnowledgeLevelModel } from 'src/app/_models/skill/knowledgeLevelModel';
  
 @Injectable()
 export class KnowledgeLevelService {

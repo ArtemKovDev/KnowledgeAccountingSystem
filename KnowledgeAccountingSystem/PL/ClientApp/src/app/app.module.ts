@@ -15,6 +15,8 @@ import { AuthGuard } from './shared/guards/auth/authguard';
 import { SkillComponent } from './skill/skill.component';
 import { SkillCategoryComponent } from './skillCategory/skillCategory.component';
 import { KnowledgeLevelComponent } from './knowledgeLevel/knowledgeLevel.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ManagerGuard } from './shared/guards/admin/managerGuard';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -29,7 +31,8 @@ export function tokenGetter() {
     UserComponent,
     SkillComponent,
     SkillCategoryComponent,
-    KnowledgeLevelComponent
+    KnowledgeLevelComponent, 
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,9 +42,10 @@ export function tokenGetter() {
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
       { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
-      { path: 'skills', component: SkillComponent, canActivate: [AuthGuard]},
-      { path: 'skillcategories', component: SkillCategoryComponent, canActivate: [AuthGuard]},
-      { path: 'knowledgelevels', component: KnowledgeLevelComponent, canActivate: [AuthGuard]},
+      { path: 'skills', component: SkillComponent, canActivate: [AuthGuard, ManagerGuard]},
+      { path: 'skillcategories', component: SkillCategoryComponent, canActivate: [AuthGuard, ManagerGuard]},
+      { path: 'knowledgelevels', component: KnowledgeLevelComponent, canActivate: [AuthGuard, ManagerGuard]},
+      { path: 'forbidden', component: ForbiddenComponent }
     ]),
     JwtModule.forRoot({
       config: {
