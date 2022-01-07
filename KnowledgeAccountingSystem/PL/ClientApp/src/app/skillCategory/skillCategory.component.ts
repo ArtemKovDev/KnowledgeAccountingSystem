@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SkillCategoryService } from '../shared/services/skillCategory.service';
+import { SkillCategoryService } from '../shared/services/skill-category.service';
 import { SkillCategoryModel } from '../_models/skill/skillCategoryModel';
  
 @Component({

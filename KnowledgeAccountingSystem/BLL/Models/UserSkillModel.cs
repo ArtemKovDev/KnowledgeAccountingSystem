@@ -10,8 +10,6 @@ namespace BLL.Models
 
         public string SkillName { get; set; }
 
-        public string SkillDescription { get; set; }
-
         public int KnowledgeLevelId { get; set; }
 
         public string KnowledgeLevel { get; set; }

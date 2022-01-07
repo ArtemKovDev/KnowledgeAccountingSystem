@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KnowledgeLevelModel } from '../_models/skill/knowledgeLevelModel';
-import { KnowledgeLevelService } from '../shared/services/knowledgeLevel.service';
+import { KnowledgeLevelService } from '../shared/services/knowledge-level.service';
  
 @Component({
     selector: 'knowledgeLevel',

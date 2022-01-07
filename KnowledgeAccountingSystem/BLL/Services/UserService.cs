@@ -47,7 +47,6 @@ namespace BLL.Services
                 {
                     SkillId = u.Skill.Id,
                     SkillName = u.Skill.Name,
-                    SkillDescription = u.Skill.Description,
                     KnowledgeLevelId = u.KnowledgeLevel.Id,
                     KnowledgeLevel = u.KnowledgeLevel.Name
                 };
