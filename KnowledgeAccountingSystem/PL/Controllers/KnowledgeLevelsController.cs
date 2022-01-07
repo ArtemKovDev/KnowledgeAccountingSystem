@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PL.Filters;
-using PL.ViewModels.KnowledgeLevels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +41,11 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateKnowledgeLevelModel knowledgeLevel)
+        public async Task<IActionResult> Post(KnowledgeLevelModel knowledgeLevel)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(_mapper.Map<CreateKnowledgeLevelModel, KnowledgeLevelModel>(knowledgeLevel));
+                await _service.AddAsync(knowledgeLevel);
                 return Ok(knowledgeLevel);
             }
             return BadRequest(ModelState);

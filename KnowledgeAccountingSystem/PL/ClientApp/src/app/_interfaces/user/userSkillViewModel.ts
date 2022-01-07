@@ -1,6 +1,5 @@
-export class UserSkillViewModel{
-    constructor(
-        public skillId?: number,
-        public knowledgeLevelId?: number) { }
+export interface UserSkillViewModel{
+    skillId: number;
+    knowledgeLevelId: number;
 }
 

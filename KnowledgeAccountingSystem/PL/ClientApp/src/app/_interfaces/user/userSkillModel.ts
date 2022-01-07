@@ -1,9 +1,9 @@
-export class UserSkillModel{
-    constructor(
-        public skillId?: number,
-        public skillName?: string,
-        public skillDescription?: string,
-        public knowledgeLevelId?: number,
-        public knowledgeLevel?: string) { }
+export interface UserSkillModel{
+    skillId: number;
+    skillName: string;
+    skillDescription: string;
+    knowledgeLevelId: number;
+    knowledgeLevel: string;
 }
+
 

@@ -12,7 +12,7 @@ import { UserSkillViewModel } from '../_interfaces/user/userSkillViewModel';
 })
 export class UserComponent implements OnInit {
 
-    userModel: UserModel = new UserModel();
+    userModel: UserModel;
     
     constructor(private userService: UserService) { }
 

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PL.Filters;
-using PL.ViewModels.SkillCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +41,11 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateSkillCategoryModel skillCategory)
+        public async Task<IActionResult> Post(SkillCategoryModel skillCategory)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(_mapper.Map<CreateSkillCategoryModel, SkillCategoryModel>(skillCategory));
+                await _service.AddAsync(skillCategory);
                 return Ok(skillCategory);
             }
             return BadRequest(ModelState);

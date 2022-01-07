@@ -44,11 +44,11 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateSkillModel skill)
+        public async Task<IActionResult> Post(SkillModel skill)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(_mapper.Map<CreateSkillModel, SkillModel>(skill));
+                await _service.AddAsync(skill);
                 return Ok(skill);
             }
             return BadRequest(ModelState);
