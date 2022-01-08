@@ -4,8 +4,6 @@ import { SkillService } from '../shared/services/skill.service';
 import { UserService } from '../shared/services/user.service';
 import { KnowledgeLevelModel } from '../_models/skill/knowledgeLevelModel';
 import { SkillModel } from '../_models/skill/skillModel';
-import { UpdateUserModel } from '../_models/user/updateUserModel';
-import { UserModel } from '../_models/user/userModel';
 import { UserSkillModel } from '../_models/user/userSkillModel';
 
 @Component({

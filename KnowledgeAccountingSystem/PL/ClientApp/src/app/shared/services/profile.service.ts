@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { UpdateUserModel } from 'src/app/_models/user/updateUserModel';
+import { UserModel } from 'src/app/_models/user/userModel';
  
 @Injectable()
 export class ProfileService {
@@ -14,7 +14,7 @@ export class ProfileService {
         return this.http.get(this.url + "/getUserCredentials");
     }
     
-    updateUserCredentials(updateUserModel: UpdateUserModel) {
+    updateUserCredentials(updateUserModel: UserModel) {
         return this.http.put(this.url + "/updateUserCredentials", updateUserModel);
     }
 

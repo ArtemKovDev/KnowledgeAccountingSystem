@@ -33,11 +33,11 @@ namespace PL.Controllers
         }
 
         [HttpPut("updateUserCredentials")]
-        public async Task<IActionResult> UpdateUserCredentials(UpdateUserModel userModel)
+        public async Task<IActionResult> UpdateUserCredentials(UserModel userModel)
         {
             if (ModelState.IsValid)
             {
-                await _profileService.UpdateCurrentUserCredentials(User, _mapper.Map<UpdateUserModel, UserModel>(userModel));
+                await _profileService.UpdateCurrentUserCredentials(User, userModel);
                 return Ok(userModel);
             }
             return BadRequest(ModelState);

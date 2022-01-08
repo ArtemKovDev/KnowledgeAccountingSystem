@@ -1,7 +1,69 @@
-<ul>
-    <li>{{currentUser.email}}</li>
-    <li>{{currentUser.firstName}}</li>
-    <li>{{currentUser.lastName}}</li>
-    <li>{{currentUser.placeOfWork}}</li>
-    <li>{{currentUser.education}}</li>
-</ul>
+<h1>Profile</h1>
+<table *ngIf="tableMode; else edit" class="table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Email</td>
+            <td>{{currentUser?.email}}</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>{{currentUser?.firstName}}</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>{{currentUser?.lastName}}</td>
+        </tr>       
+        <tr>
+            <td>Place of work</td>
+            <td>{{currentUser?.placeOfWork}}</td>             
+        </tr>
+        <tr>
+            <td>Education</td>
+            <td>{{currentUser?.education}}</td>
+        </tr>
+        <tr>
+            <td>Roles:</td>  
+            <td><span *ngFor="let role of userRoles">{{role}};</span></td>      
+        </tr>   
+    </tbody>
+     <button class="btn btn-sm btn-primary" (click)="editUser()">Изменить</button>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #edit>
+    <table>
+     <tr>
+        <td>First Name</td>
+        <td>
+            <input type="text" [(ngModel)]="currentUser.firstName" class="form-control" />
+        </td>    
+    </tr>
+    <tr>
+        <td>Last Name</td>
+        <td>
+            <input type="text" [(ngModel)]="currentUser.lastName" class="form-control" />
+        </td>  
+    </tr>
+    <tr>
+        <td>Place of work</td>
+        <td>
+            <input type="text" [(ngModel)]="currentUser.placeOfWork" class="form-control" />
+        </td>   
+    </tr>
+    <tr>
+        <td>Education</td>
+        <td>
+            <input type="text" [(ngModel)]="currentUser.education" class="form-control" />
+        </td>     
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success" />
+            <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning" />
+        </td>
+    </tr>
+    </table>
+</ng-template>
+ 
