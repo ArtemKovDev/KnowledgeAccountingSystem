@@ -3,6 +3,7 @@ using BLL.Interfaces;
 using BLL.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PL.ViewModels.Account;
 using System;
@@ -31,21 +32,22 @@ namespace PL.Controllers
         [HttpPost("createRole")]
         public async Task<IActionResult> CreateRole(RoleModel model)
         {
-            await _roleService.CreateRole(model.RoleName);
+            await _roleService.CreateRole(model.Name);
             return Ok();
         }
 
         [HttpDelete("deleteRole")]
         public async Task<IActionResult> DeleteRole(RoleModel model)
         {
-            await _roleService.DeleteRole(model.RoleName);
+            await _roleService.DeleteRole(model.Name);
             return Ok();
         }
 
         [HttpGet("getRoles")]
         public async Task<IActionResult> GetRoles()
         {
-            return Ok(await _roleService.GetRoles());
+            var roles = await _roleService.GetRoles() as List<IdentityRole>;
+            return Ok(_mapper.Map<List<IdentityRole>, List<RoleModel>>(roles));
         }
 
         [HttpPost("assignUserToRole")]

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Models;
 using BLL.Models.Account;
+using Microsoft.AspNetCore.Identity;
 using PL.ViewModels.Account;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace PL.Infrastructure
             CreateMap<RegisterModel, Register>();
             CreateMap<UpdateUserModel, UserModel>();
             CreateMap<FilterSearchModel, FilterSearch>();
+            CreateMap<IdentityRole, RoleModel>();
         }
     }
 }
