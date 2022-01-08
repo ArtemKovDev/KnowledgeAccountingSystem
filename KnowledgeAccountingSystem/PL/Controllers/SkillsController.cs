@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
-    [Authorize(Roles = "manager")]
     [CustomExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
@@ -27,6 +26,7 @@ namespace PL.Controllers
         }
 
         // GET: api/<SkillsController>
+        [Authorize(Roles = "manager, user")]
         [HttpGet]
         public IEnumerable<SkillModel> Get()
         {
@@ -34,12 +34,14 @@ namespace PL.Controllers
         }
 
         // GET api/<SkillsController>/5
+        [Authorize(Roles = "manager")]
         [HttpGet("{id}")]
         public async Task<SkillModel> Get(int id)
         {
             return await _service.GetByIdAsync(id);
         }
 
+        [Authorize(Roles = "manager")]
         [HttpPost]
         public async Task<IActionResult> Post(SkillModel skill)
         {
@@ -50,6 +52,8 @@ namespace PL.Controllers
             }
             return BadRequest(ModelState);
         }
+
+        [Authorize(Roles = "manager")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -57,6 +61,7 @@ namespace PL.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "manager")]
         [HttpPut]
         public async Task<IActionResult> Put(SkillModel skill)
         {

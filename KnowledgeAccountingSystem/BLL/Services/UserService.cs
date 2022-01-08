@@ -30,70 +30,34 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal)
-        {
-            User user = await _userManager.GetUserAsync(claimsPrincipal);
-            return (await _userManager.GetRolesAsync(user)).ToList();
-        }
-
         public IEnumerable<UserSkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal)
         {
             var userId = _userManager.GetUserId(claimsPrincipal);
             var userSkills = _unitOfWork.UserSkillRepository.GetAllWithDetails().Where(ps => ps.UserId == userId).ToList();
 
-            foreach(var u in userSkills)
-            {
-                yield return new UserSkillModel()
-                {
-                    SkillId = u.Skill.Id,
-                    SkillName = u.Skill.Name,
-                    KnowledgeLevelId = u.KnowledgeLevel.Id,
-                    KnowledgeLevel = u.KnowledgeLevel.Name
-                };
-            }    
+            return _mapper.Map<List<UserSkill>, List<UserSkillModel>>(userSkills);
         }
 
-        public bool AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId)
+        public async Task AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId)
         {
             var userId = _userManager.GetUserId(claimsPrincipal);
-            if (_unitOfWork.SkillRepository.FindAll().Select(s=>s.Id).Contains(skillId))
-            {
-                _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = userId, SkillId = skillId, KnowledgeLevelId = knowledgeLevelId });
-                _unitOfWork.SaveAsync();
-                return true;
-            }
-            return false;
+            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = userId, SkillId = skillId, KnowledgeLevelId = knowledgeLevelId });
+            await _unitOfWork.SaveAsync();
         }
 
-        public bool DeleteCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId)
+        public async Task DeleteUserSkill(int userSkillId)
+        {
+            await _unitOfWork.UserSkillRepository.DeleteByIdAsync(userSkillId);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel)
         {
             var userId = _userManager.GetUserId(claimsPrincipal);
-
-            var ps = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(ps => ps.UserId == userId && ps.SkillId == skillId && ps.KnowledgeLevelId == knowledgeLevelId);
-            if (ps != null)
-            { 
-                _unitOfWork.UserSkillRepository.Delete(ps);
-                _unitOfWork.SaveAsync();
-                return true;
-            }
-            return false;
-        }
-
-        public UserModel GetCurrentUserCredentials(ClaimsPrincipal claimsPrincipal)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == claimsPrincipal.Identity.Name);
-            return _mapper.Map<User, UserModel>(user);
-        }
-
-        public async Task UpdateCurrentUserCredentials(ClaimsPrincipal claimsPrincipal, UserModel userModel)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == claimsPrincipal.Identity.Name);
-
-            user.FirstName = userModel.FirstName;
-            user.LastName = userModel.LastName;
-            user.Education = userModel.Education;
-            user.PlaceOfWork = userModel.PlaceOfWork;
-            await _userManager.UpdateAsync(user);
+            var userSkill = _mapper.Map<UserSkillModel, UserSkill>(userSkillModel);
+            userSkill.UserId = userId;
+            _unitOfWork.UserSkillRepository.Update(userSkill);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace BLL.Infrastructure
             CreateMap<User, UserModel>();
             CreateMap<KnowledgeLevel, KnowledgeLevelModel>()
                 .ReverseMap();
+            CreateMap<UserSkill, UserSkillModel>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { UpdateUserModel } from 'src/app/_models/user/updateUserModel';
 import { UserSkillModel } from 'src/app/_models/user/userSkillModel';
  
 @Injectable()
@@ -9,18 +8,6 @@ export class UserService {
     private url = "/api/user";
  
     constructor(private http: HttpClient) {
-    }
- 
-    getUserCredentials() {
-        return this.http.get(this.url + "/getUserCredentials");
-    }
-    
-    updateUserCredentials(updateUserModel: UpdateUserModel) {
-        return this.http.put(this.url + "/updateUserCredentials", updateUserModel);
-    }
-
-    getRoles() {
-        return this.http.get(this.url + "/getRoles");
     }
 
     getSkills() {
@@ -39,5 +26,9 @@ export class UserService {
             body: userSkillModel
           };
         return this.http.delete(this.url + '/deleteSkill', options);
+    }
+
+    updateSkill(userSkillModel: UserSkillModel) {
+        return this.http.put(this.url + '/updateSkill', userSkillModel)
     }
 }

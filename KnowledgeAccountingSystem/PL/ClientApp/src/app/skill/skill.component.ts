@@ -36,7 +36,7 @@ export class SkillComponent implements OnInit {
     save() {
         if (this.skill.id == null) {
             this.skillService.createSkill(this.skill)
-                .subscribe((data: SkillModel) => this.skills.push(data));
+                .subscribe(data => this.loadSkills());
         } else {
             this.skillService.updateSkill(this.skill)
                 .subscribe(data => this.loadSkills());

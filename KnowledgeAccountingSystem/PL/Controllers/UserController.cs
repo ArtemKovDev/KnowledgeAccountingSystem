@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
+    [Authorize(Roles = "user")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -28,59 +29,31 @@ namespace PL.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "user,manager")]
-        [HttpGet("getUserCredentials")]
-        public IActionResult GetUserCredentials()
-        {
-            return Ok(_userService.GetCurrentUserCredentials(User));
-        }
-
-        [Authorize(Roles = "user, manager")]
-        [HttpPut("updateUserCredentials")]
-        public async Task<IActionResult> UpdateUserCredentials(UpdateUserModel userModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await _userService.UpdateCurrentUserCredentials(User, _mapper.Map<UpdateUserModel, UserModel>(userModel));
-                return Ok(userModel);
-            }
-            return BadRequest(ModelState);
-        }
-
-        [Authorize(Roles = "user,manager")]
-        [HttpGet("getRoles")]
-        public async Task<IActionResult> GetRoles()
-        {
-            return Ok(await _userService.GetUserRoles(User));
-        }
-
-        [Authorize(Roles = "user")]
         [HttpGet("getSkills")]
         public IActionResult GetSkills()
         {
             return Ok(_userService.GetUserSkills(User));
         }
 
-        [Authorize(Roles = "user")]
         [HttpPost("addSkill")]
-        public IActionResult AddSkill(UserSkillModel userSkillModel)
+        public async Task<IActionResult> AddSkill(UserSkillModel userSkillModel)
         {
-            if(_userService.AddCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId))
-            {
-                return Ok();
-            }
-            return BadRequest();
+            await _userService.AddCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId);
+            return Ok(userSkillModel);
         }
 
-        [Authorize(Roles = "user")]
         [HttpDelete("deleteSkill")]
-        public IActionResult DeleteSkill(UserSkillModel userSkillModel)
+        public async Task<IActionResult> DeleteSkill(UserSkillModel userSkillModel)
         {
-            if (_userService.DeleteCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId))
-            {
-                return Ok();
-            }
-            return BadRequest();
+            await _userService.DeleteUserSkill(userSkillModel.Id);
+            return Ok();
+        }
+
+        [HttpPut("updateSkill")]
+        public async Task<IActionResult> UpdateSkill(UserSkillModel userSkillModel)
+        {
+            await _userService.UpdateUserSkill(User, userSkillModel);
+            return Ok();
         }
     }
 }

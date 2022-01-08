@@ -76,6 +76,7 @@ namespace PL
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IKnowledgeLevelService, KnowledgeLevelService>();
             services.AddScoped<ISearchService, SearchService>();
+            services.AddScoped<IProfileService, ProfileService>();
 
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services
