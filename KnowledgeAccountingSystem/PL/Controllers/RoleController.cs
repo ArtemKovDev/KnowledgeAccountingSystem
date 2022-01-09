@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models.Account;
+using BLL.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -32,15 +33,57 @@ namespace PL.Controllers
         [HttpPost("createRole")]
         public async Task<IActionResult> CreateRole(RoleModel model)
         {
-            await _roleService.CreateRole(model.Name);
-            return Ok();
+            if (model == null || !ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var result = await _roleService.CreateRole(model.Name);
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(e => e.Description);
+
+                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                }
+                return Ok();
+            }
+            catch(KASException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
         }
 
         [HttpDelete("deleteRole")]
         public async Task<IActionResult> DeleteRole(RoleModel model)
         {
-            await _roleService.DeleteRole(model.Name);
-            return Ok();
+            if (model == null || !ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var result = await _roleService.DeleteRole(model.Name);
+
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(e => e.Description);
+
+                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                }
+                return Ok();
+            }
+            catch (KASException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+
         }
 
         [HttpGet("getRoles")]
@@ -53,17 +96,57 @@ namespace PL.Controllers
         [HttpPost("assignUserToRole")]
         public async Task<IActionResult> AssignUserToRole(UserRolesModel model)
         {
-            await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
+            if (model == null || !ModelState.IsValid)
+                return BadRequest();
 
-            return Ok();
+            try
+            {
+                var result = await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
+
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(e => e.Description);
+
+                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                }
+                return Ok();
+            }
+            catch (KASException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
         }
 
         [HttpDelete("removeUserFromRole")]
         public async Task<IActionResult> RemoveUserFromRole(UserRolesModel model)
         {
-            await _roleService.RemoveUserFromRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
+            if (model == null || !ModelState.IsValid)
+                return BadRequest();
 
-            return Ok();
+            try
+            {
+                var result = await _roleService.RemoveUserFromRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
+
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(e => e.Description);
+
+                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                }
+                return Ok();
+            }
+            catch (KASException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
         }
     }
 }

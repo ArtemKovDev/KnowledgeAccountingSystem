@@ -19,11 +19,9 @@ namespace PL.Controllers
     public class SkillCategoriesController : ControllerBase
     {
         private readonly ISkillCategoryService _service;
-        private readonly IMapper _mapper;
-        public SkillCategoriesController(ISkillCategoryService service, IMapper mapper)
+        public SkillCategoriesController(ISkillCategoryService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/<SkillsController>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models.Account;
+using BLL.Validation;
 using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -25,53 +26,55 @@ namespace BLL.Services
             _roleManager = roleManager;
         }
 
-        public async Task AssignUserToRoles(UserRoles assignUserToRoles)
+        public async Task<IdentityResult> AssignUserToRoles(UserRoles assignUserToRoles)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
             var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
-
-            var result = await _userManager.AddToRolesAsync(user, roles); 
-
-            if (!result.Succeeded)
+            
+            if(roles.Count == 0)
             {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
+                throw new KASException(string.Join(';', "This user role does not exist"));
             }
+
+            var result = await _userManager.AddToRolesAsync(user, roles);
+
+            return result;
         }
 
-        public async Task RemoveUserFromRoles(UserRoles removeUserFromRoles)
+        public async Task<IdentityResult> RemoveUserFromRoles(UserRoles removeUserFromRoles)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == removeUserFromRoles.Email);
             var roles = _roleManager.Roles.ToList().Where(r => removeUserFromRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
 
+            if (roles.Count == 0)
+            {
+                throw new KASException(string.Join(';', "This user role does not exist"));
+            }
+
             var result = await _userManager.RemoveFromRolesAsync(user, roles);
 
-            if (!result.Succeeded)
-            {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
-            }
+            return result;
         }
 
-        public async Task CreateRole(string roleName)
+        public async Task<IdentityResult> CreateRole(string roleName)
         {
             var result = await _roleManager.CreateAsync(new IdentityRole(roleName));
 
-            if (!result.Succeeded)
-            {
-                throw new System.Exception($"Role could not be created: {roleName}.");
-            }
+            return result;
         }
 
-        public async Task DeleteRole(string roleName)
+        public async Task<IdentityResult> DeleteRole(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                throw new KASException(string.Join(';', "This user role does not exist"));
+            }
             var result = await _roleManager.DeleteAsync(role);
 
-            if (!result.Succeeded)
-            {
-                throw new System.Exception($"Role could not be deleted: {roleName}.");
-            }
+            return result;
         }
 
         public async Task<IEnumerable<IdentityRole>> GetRoles()

@@ -18,11 +18,9 @@ namespace PL.Controllers
     public class KnowledgeLevelsController : ControllerBase
     {
         private readonly IKnowledgeLevelService _service;
-        private readonly IMapper _mapper;
-        public KnowledgeLevelsController(IKnowledgeLevelService service, IMapper mapper)
+        public KnowledgeLevelsController(IKnowledgeLevelService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/<SkillsController>

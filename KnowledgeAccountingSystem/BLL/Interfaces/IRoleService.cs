@@ -10,10 +10,10 @@ namespace BLL.Interfaces
 {
     public interface IRoleService
     {
-        Task AssignUserToRoles(UserRoles assignUserToRoles);
-        Task RemoveUserFromRoles(UserRoles assignUserToRoles);
-        Task CreateRole(string roleName);
-        Task DeleteRole(string roleName);
+        Task<IdentityResult> AssignUserToRoles(UserRoles assignUserToRoles);
+        Task<IdentityResult> RemoveUserFromRoles(UserRoles assignUserToRoles);
+        Task<IdentityResult> CreateRole(string roleName);
+        Task<IdentityResult> DeleteRole(string roleName);
         Task<IEnumerable<string>> GetRoles(User user);
         Task<IEnumerable<IdentityRole>> GetRoles();
     }

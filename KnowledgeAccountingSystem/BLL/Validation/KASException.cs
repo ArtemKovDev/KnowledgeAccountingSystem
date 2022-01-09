@@ -6,5 +6,6 @@ namespace BLL.Validation
 {
     public class KASException : Exception
     {
+        public KASException(string massage): base(massage) { }
     }
 }
