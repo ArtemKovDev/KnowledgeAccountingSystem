@@ -18,6 +18,7 @@ import { KnowledgeLevelComponent } from './knowledgeLevel/knowledgeLevel.compone
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ManagerGuard } from './shared/guards/admin/managerGuard';
 import { ProfileComponent } from './profile/profile.component';
+import { RoleComponent } from './role/role.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -34,7 +35,8 @@ export function tokenGetter() {
     SkillCategoryComponent,
     KnowledgeLevelComponent, 
     ForbiddenComponent,
-    ProfileComponent
+    ProfileComponent,
+    RoleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,7 +50,8 @@ export function tokenGetter() {
       { path: 'skillcategories', component: SkillCategoryComponent, canActivate: [AuthGuard, ManagerGuard]},
       { path: 'knowledgelevels', component: KnowledgeLevelComponent, canActivate: [AuthGuard, ManagerGuard]},
       { path: 'forbidden', component: ForbiddenComponent },
-      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]  }
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]  },
+      { path: 'roles', component: RoleComponent, canActivate: [AuthGuard, ManagerGuard]}
     ]),
     JwtModule.forRoot({
       config: {

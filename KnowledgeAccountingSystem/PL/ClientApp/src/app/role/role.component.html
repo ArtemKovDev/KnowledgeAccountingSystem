@@ -1,0 +1,55 @@
+<h1>Role list</h1>
+<div *ngIf="userRolementSuccess" class="alert alert-success" role="alert">
+    <span>User role operation is successful!</span>
+</div>
+<div *ngIf="showError" class="alert alert-danger" role="alert">
+    <span [innerHTML]="errorMessage"></span>
+</div>
+<input type="button" value="Добавить" class="btn btn-info" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Role</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of roles">
+            <ng-template [ngIf]="userRoleModel?.roles[0] != r.name" [ngIfElse]="userRolementMode">
+                <td>{{r?.name}}</td>
+                <td>
+                    <button class="btn btn-sm btn-info" (click)="userRolmentMode(r.name)">User rolement mode</button>
+                    <button class="btn btn-sm btn-danger" (click)="delete(r)">Удалить</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #userRolementMode>
+    <td>
+        {{userRoleModel?.roles[0]}}
+    </td>
+    <td>
+        <input type="email" [(ngModel)]="userRoleModel.email" class="form-control" placeholder="user email" />
+    </td>
+    <td>
+        <input type="button" value="Присвоить роль" (click)="saveUserRoleAssignment()" class="btn btn-sm btn-success" />
+        <input type="button" value="Отнять роль" (click)="saveUserRoleRemoving()" class="btn btn-sm btn-danger" />
+        <input type="button" value="Отмена" (click)="cancelUserRole()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+ 
+<!--шаблон для добавления-->
+<ng-template #create>
+    <div class="form-group">
+        <label>Role</label>
+        <input type="text" [(ngModel)]="currentRole.name" class="form-control" />
+    </div>
+    
+    <div>
+        <input type="button" value="Сохранить" (click)="saveRole()" class="btn btn-success" />
+        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>

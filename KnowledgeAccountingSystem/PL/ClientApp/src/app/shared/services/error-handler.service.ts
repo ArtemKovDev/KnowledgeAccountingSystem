@@ -44,6 +44,14 @@ export class ErrorHandlerService implements HttpInterceptor {
       })
       return message.slice(0, -4);
     }
+    if(this._router.url === '/roles'){
+      let message = '';
+      const values = Object.values(error.error.errors);
+      values.map((m: string) => {
+         message += m + '<br>';
+      })
+      return message.slice(0, -4);
+    }
     else{
       return error.error ? error.error : error.message;
     }
