@@ -1,4 +1,4 @@
-export interface RoleResponseModel {
+export interface ResponseModel {
     isSuccessful: boolean;
     errors: string[];
 }

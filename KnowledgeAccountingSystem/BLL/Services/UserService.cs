@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using BLL.Models;
 using BLL.Models.Account;
+using BLL.Validation;
 using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -38,10 +39,17 @@ namespace BLL.Services
             return _mapper.Map<List<UserSkill>, List<UserSkillModel>>(userSkills);
         }
 
-        public async Task AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, int skillId, int knowledgeLevelId)
+        public async Task AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel)
         {
             var userId = _userManager.GetUserId(claimsPrincipal);
-            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = userId, SkillId = skillId, KnowledgeLevelId = knowledgeLevelId });
+
+            var userSkill = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(u => u.SkillId == userSkillModel.SkillId && u.UserId == userId);
+            if(userSkill != null)
+            {
+                throw new KASException("This skill already exists!");
+            }
+
+            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = userId, SkillId = userSkillModel.SkillId, KnowledgeLevelId = userSkillModel.KnowledgeLevelId });
             await _unitOfWork.SaveAsync();
         }
 
@@ -56,6 +64,13 @@ namespace BLL.Services
             var userId = _userManager.GetUserId(claimsPrincipal);
             var userSkill = _mapper.Map<UserSkillModel, UserSkill>(userSkillModel);
             userSkill.UserId = userId;
+
+            var result = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(u => u.SkillId == userSkillModel.SkillId && u.UserId == userId);
+            if (result != null)
+            {
+                throw new KASException("This skill already exists!");
+            }
+
             _unitOfWork.UserSkillRepository.Update(userSkill);
             await _unitOfWork.SaveAsync();
         }

@@ -36,15 +36,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     return error.message;
   }
   private handleBadRequest = (error: HttpErrorResponse): string => {
-    if(this._router.url === '/authentication/register'){
-      let message = '';
-      const values = Object.values(error.error.errors);
-      values.map((m: string) => {
-         message += m + '<br>';
-      })
-      return message.slice(0, -4);
-    }
-    if(this._router.url === '/roles'){
+    if(this._router.url === '/authentication/register' || this._router.url === '/roles' || this._router.url === '/user'){
       let message = '';
       const values = Object.values(error.error.errors);
       values.map((m: string) => {

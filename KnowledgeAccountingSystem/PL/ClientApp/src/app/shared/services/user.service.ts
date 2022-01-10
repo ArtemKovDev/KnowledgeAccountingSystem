@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { UserSkillModel } from 'src/app/_models/user/userSkillModel';
+import { ResponseModel } from 'src/app/_models/response/responseModel.model';
  
 @Injectable()
 export class UserService {
@@ -15,7 +16,7 @@ export class UserService {
     }
 
     addSkill(userSkillModel: UserSkillModel) {
-        return this.http.post(this.url + "/addSkill", userSkillModel);
+        return this.http.post<ResponseModel>(this.url + "/addSkill", userSkillModel);
     }
 
     deleteSkill(userSkillModel: UserSkillModel) {
@@ -29,6 +30,6 @@ export class UserService {
     }
 
     updateSkill(userSkillModel: UserSkillModel) {
-        return this.http.put(this.url + '/updateSkill', userSkillModel)
+        return this.http.put<ResponseModel>(this.url + '/updateSkill', userSkillModel)
     }
 }

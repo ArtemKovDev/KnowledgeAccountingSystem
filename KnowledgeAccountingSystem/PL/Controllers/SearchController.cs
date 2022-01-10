@@ -30,11 +30,23 @@ namespace PL.Controllers
             _roleService = roleService;
             _mapper = mapper;
         }
-        [Authorize(Roles = "manager")]
+
         [HttpGet("getUsers")]
         public IEnumerable<UserModel> GetUsers()
         {
             return _searchService.GetUsers();
+        }
+
+        [HttpGet("getUsers/skill/{id}")]
+        public IEnumerable<UserModel> GetUsersBySkill(int id)
+        {
+            return _searchService.GetUsersBySkill(id);
+        }
+
+        [HttpPost("getUsers/role")]
+        public async Task<IEnumerable<UserModel>> GetUsersInRole(RoleModel model)
+        {
+            return await _searchService.GetUsersInRole(model.Name);
         }
     }
 }

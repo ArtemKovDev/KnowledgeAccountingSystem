@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using BLL.Models;
 using BLL.Models.Account;
+using BLL.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +37,26 @@ namespace PL.Controllers
         [HttpPost("addSkill")]
         public async Task<IActionResult> AddSkill(UserSkillModel userSkillModel)
         {
-            await _userService.AddCurrentUserSkill(User, userSkillModel.SkillId, userSkillModel.KnowledgeLevelId);
-            return Ok(userSkillModel);
+            if (userSkillModel == null || !ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                await _userService.AddCurrentUserSkill(User, userSkillModel);
+                return Ok(userSkillModel);
+            }
+            catch (KASException ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
         }
 
         [HttpDelete("deleteSkill")]
@@ -50,8 +69,26 @@ namespace PL.Controllers
         [HttpPut("updateSkill")]
         public async Task<IActionResult> UpdateSkill(UserSkillModel userSkillModel)
         {
-            await _userService.UpdateUserSkill(User, userSkillModel);
-            return Ok();
+            if (userSkillModel == null || !ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                await _userService.UpdateUserSkill(User, userSkillModel);
+                return Ok();
+            }
+            catch (KASException ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
         }
     }
 }

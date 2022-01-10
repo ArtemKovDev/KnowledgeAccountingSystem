@@ -43,17 +43,21 @@ namespace PL.Controllers
                 {
                     var errors = result.Errors.Select(e => e.Description);
 
-                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                    return BadRequest(new ResponseModel { Errors = errors, IsSuccessful = false });
                 }
                 return Ok();
             }
             catch(KASException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
         }
 
@@ -71,19 +75,22 @@ namespace PL.Controllers
                 {
                     var errors = result.Errors.Select(e => e.Description);
 
-                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                    return BadRequest(new ResponseModel { Errors = errors, IsSuccessful = false });
                 }
                 return Ok();
             }
             catch (KASException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
-
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
         }
 
         [HttpGet("getRoles")]
@@ -107,17 +114,21 @@ namespace PL.Controllers
                 {
                     var errors = result.Errors.Select(e => e.Description);
 
-                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                    return BadRequest(new ResponseModel { Errors = errors, IsSuccessful = false });
                 }
                 return Ok();
             }
             catch (KASException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
         }
 
@@ -135,17 +146,21 @@ namespace PL.Controllers
                 {
                     var errors = result.Errors.Select(e => e.Description);
 
-                    return BadRequest(new RoleResponseModel { Errors = errors, IsSuccessful = false });
+                    return BadRequest(new ResponseModel { Errors = errors, IsSuccessful = false });
                 }
                 return Ok();
             }
             catch (KASException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest(new RoleResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }
         }
     }

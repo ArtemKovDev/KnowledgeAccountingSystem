@@ -13,6 +13,9 @@ import { UserSkillModel } from '../_models/user/userSkillModel';
 })
 export class UserComponent implements OnInit {
 
+    public errorMessage: string = '';
+    public showError: boolean;
+
     tableMode: boolean = true;          // табличный режим
     userSkill: UserSkillModel = new UserSkillModel();   // изменяемый товар
     userSkills: UserSkillModel[];
@@ -45,10 +48,18 @@ export class UserComponent implements OnInit {
     save() {
         if (this.userSkill.id == null) {
             this.userService.addSkill(this.userSkill)
-                .subscribe(data => this.loadUserSkills());
+                .subscribe(data => this.loadUserSkills(),
+            error => {
+                this.errorMessage = error;
+                this.showError = true;
+            });
         } else {
-             this.userService.updateSkill(this.userSkill)
-                 .subscribe(data => this.loadUserSkills());
+            this.userService.updateSkill(this.userSkill)
+                 .subscribe(data => this.loadUserSkills(),
+            error => {
+                this.errorMessage = error;
+                this.showError = true;
+            });
         }
         this.cancel();
     }

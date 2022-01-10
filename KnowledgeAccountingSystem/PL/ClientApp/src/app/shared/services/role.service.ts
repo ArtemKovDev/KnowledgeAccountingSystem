@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { RoleModel } from 'src/app/_models/role/RoleModel';
 import { UserRolesModel } from 'src/app/_models/role/UserRolesModel';
-import { RoleResponseModel } from 'src/app/_models/response/roleResponseModel.model';
+import { ResponseModel } from 'src/app/_models/response/responseModel.model';
  
 @Injectable()
 export class RoleService {
@@ -17,7 +17,7 @@ export class RoleService {
     }
 
     createRole(role: RoleModel) {
-        return this.http.post<RoleResponseModel>(this.url + "/createRole", role);
+        return this.http.post<ResponseModel>(this.url + "/createRole", role);
     }
 
     deleteRole(role: RoleModel) {
@@ -27,11 +27,11 @@ export class RoleService {
             }),
             body: role
           };
-        return this.http.delete<RoleResponseModel>(this.url + "/deleteRole", options)
+        return this.http.delete<ResponseModel>(this.url + "/deleteRole", options)
     }
 
     assignUserToRole(model: UserRolesModel){
-        return this.http.post<RoleResponseModel>(this.url + "/assignUserToRole", model)
+        return this.http.post<ResponseModel>(this.url + "/assignUserToRole", model)
     }
 
     removeUserToRole(model: UserRolesModel){
@@ -41,6 +41,6 @@ export class RoleService {
             }),
             body: model
           };
-        return this.http.delete<RoleResponseModel>(this.url + "/removeUserFromRole", options)
+        return this.http.delete<ResponseModel>(this.url + "/removeUserFromRole", options)
     }
 }
