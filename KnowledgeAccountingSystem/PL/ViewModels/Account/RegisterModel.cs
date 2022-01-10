@@ -16,7 +16,9 @@ namespace PL.ViewModels.Account
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [Required]
         public string PlaceOfWork { get; set; }
+        [Required]
         public string Education { get; set; }
     }
 }

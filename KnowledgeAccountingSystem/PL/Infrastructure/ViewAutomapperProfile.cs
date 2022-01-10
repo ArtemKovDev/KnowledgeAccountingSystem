@@ -17,7 +17,6 @@ namespace PL.Infrastructure
             CreateMap<UserRolesModel, UserRoles>();
             CreateMap<LogonModel, Logon>();
             CreateMap<RegisterModel, Register>();
-            CreateMap<FilterSearchModel, FilterSearch>();
             CreateMap<IdentityRole, RoleModel>();
         }
     }
