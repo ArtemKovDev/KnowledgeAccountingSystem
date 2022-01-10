@@ -1,0 +1,34 @@
+<div>
+    <input type="text" name="searchTerm1" placeholder="Filter by user email"
+      [(ngModel)]="searchTerm1" (input)="searchByEmail($event.target.value)" />
+    <input type="text" name="searchTerm2" placeholder="Filter by first name"
+      [(ngModel)]="searchTerm2" (input)="searchByFirstName($event.target.value)" />
+    <input type="text" name="searchTerm3" placeholder="Filter by last name"
+      [(ngModel)]="searchTerm3" (input)="searchByLastName($event.target.value)" />
+    <input type="text" name="searchTerm4" placeholder="Filter by place of work"
+      [(ngModel)]="searchTerm4" (input)="searchByPlaceOfWork($event.target.value)" />
+    <input type="text" name="searchTerm5" placeholder="Filter by education"
+      [(ngModel)]="searchTerm5" (input)="searchByEducation($event.target.value)" />
+  </div>
+<h1>User list</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Email</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Place of work</td>
+            <td>Education</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of users">
+            <td>{{u?.email}}</td>
+            <td>{{u?.firstName}}</td>
+            <td>{{u?.lastName}}</td>
+            <td>{{u?.placeOfWork}}</td>
+            <td>{{u?.education}}</td>
+        </tr>
+    </tbody>
+</table>
+ 

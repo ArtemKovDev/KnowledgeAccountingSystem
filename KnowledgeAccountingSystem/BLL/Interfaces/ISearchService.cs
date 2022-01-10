@@ -7,6 +7,6 @@ namespace BLL.Interfaces
 {
     public interface ISearchService
     {
-        IEnumerable<UserModel> GetUsers(FilterSearch filterSearch);
+        IEnumerable<UserModel> GetUsers();
     }
 }

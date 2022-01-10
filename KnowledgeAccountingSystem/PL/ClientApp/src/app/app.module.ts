@@ -19,6 +19,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ManagerGuard } from './shared/guards/admin/managerGuard';
 import { ProfileComponent } from './profile/profile.component';
 import { RoleComponent } from './role/role.component';
+import { SearchComponent } from './search/search.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -36,7 +37,8 @@ export function tokenGetter() {
     KnowledgeLevelComponent, 
     ForbiddenComponent,
     ProfileComponent,
-    RoleComponent
+    RoleComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,7 +53,8 @@ export function tokenGetter() {
       { path: 'knowledgelevels', component: KnowledgeLevelComponent, canActivate: [AuthGuard, ManagerGuard]},
       { path: 'forbidden', component: ForbiddenComponent },
       { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]  },
-      { path: 'roles', component: RoleComponent, canActivate: [AuthGuard, ManagerGuard]}
+      { path: 'roles', component: RoleComponent, canActivate: [AuthGuard, ManagerGuard]},
+      { path: 'search', component: SearchComponent, canActivate: [AuthGuard, ManagerGuard]}
     ]),
     JwtModule.forRoot({
       config: {

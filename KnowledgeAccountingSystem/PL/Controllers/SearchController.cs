@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
+    [Authorize(Roles = "manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class SearchController : ControllerBase
@@ -30,10 +31,10 @@ namespace PL.Controllers
             _mapper = mapper;
         }
         [Authorize(Roles = "manager")]
-        [HttpPost("getUsers")]
-        public IEnumerable<UserModel> GetUsers(FilterSearchModel filterSearchModel)
+        [HttpGet("getUsers")]
+        public IEnumerable<UserModel> GetUsers()
         {
-            return _searchService.GetUsers(_mapper.Map<FilterSearchModel, FilterSearch>(filterSearchModel));
+            return _searchService.GetUsers();
         }
     }
 }
