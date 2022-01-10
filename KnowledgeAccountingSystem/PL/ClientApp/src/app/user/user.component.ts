@@ -53,20 +53,11 @@ export class UserComponent implements OnInit {
                 this.errorMessage = error;
                 this.showError = true;
             });
-        } else {
-            this.userService.updateSkill(this.userSkill)
-                 .subscribe(data => this.loadUserSkills(),
-            error => {
-                this.errorMessage = error;
-                this.showError = true;
-            });
-        }
+        } 
         this.cancel();
     }
-    editSkill(u: UserSkillModel) {
-        this.userSkill = u;
-    }
     cancel() {
+        this.showError = false;
         this.userSkill = new UserSkillModel();
         this.tableMode = true;
     }

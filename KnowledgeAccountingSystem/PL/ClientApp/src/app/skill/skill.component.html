@@ -14,7 +14,13 @@
             <ng-template [ngIf]="skill?.id != s.id" [ngIfElse]="edit">
                 <td>{{s?.name}}</td>
                 <td>{{s?.description}}</td>
-                <td>{{s?.category.name}}</td>
+                <td>
+                    <div *ngFor="let sc of skillCategories" >
+                        <span *ngIf="sc.id == s.categoryId">
+                           {{sc?.name}} 
+                        </span>
+                    </div>                   
+                </td>
                 <td>
                     <button class="btn btn-sm btn-primary" (click)="editSkill(s)">Изменить</button>
                     <button class="btn btn-sm btn-danger" (click)="delete(s)">Удалить</button>

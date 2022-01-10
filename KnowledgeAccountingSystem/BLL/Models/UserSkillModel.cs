@@ -15,9 +15,5 @@ namespace BLL.Models
 
         [Required]
         public int KnowledgeLevelId { get; set; }
-
-        public Skill Skill { get; set; }
-
-        public KnowledgeLevel KnowledgeLevel { get; set; }
     }
 }

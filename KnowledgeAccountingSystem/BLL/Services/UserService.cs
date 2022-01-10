@@ -58,21 +58,5 @@ namespace BLL.Services
             await _unitOfWork.UserSkillRepository.DeleteByIdAsync(userSkillId);
             await _unitOfWork.SaveAsync();
         }
-
-        public async Task UpdateUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel)
-        {
-            var userId = _userManager.GetUserId(claimsPrincipal);
-            var userSkill = _mapper.Map<UserSkillModel, UserSkill>(userSkillModel);
-            userSkill.UserId = userId;
-
-            var result = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(u => u.SkillId == userSkillModel.SkillId && u.UserId == userId);
-            if (result != null)
-            {
-                throw new KASException("This skill already exists!");
-            }
-
-            _unitOfWork.UserSkillRepository.Update(userSkill);
-            await _unitOfWork.SaveAsync();
-        }
     }
 }

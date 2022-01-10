@@ -65,30 +65,5 @@ namespace PL.Controllers
             await _userService.DeleteUserSkill(userSkillModel.Id);
             return Ok();
         }
-
-        [HttpPut("updateSkill")]
-        public async Task<IActionResult> UpdateSkill(UserSkillModel userSkillModel)
-        {
-            if (userSkillModel == null || !ModelState.IsValid)
-                return BadRequest();
-
-            try
-            {
-                await _userService.UpdateUserSkill(User, userSkillModel);
-                return Ok();
-            }
-            catch (KASException ex)
-            {
-                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
-            }
-        }
     }
 }

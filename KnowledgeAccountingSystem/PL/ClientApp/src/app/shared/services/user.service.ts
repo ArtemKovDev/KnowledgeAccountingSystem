@@ -28,8 +28,4 @@ export class UserService {
           };
         return this.http.delete(this.url + '/deleteSkill', options);
     }
-
-    updateSkill(userSkillModel: UserSkillModel) {
-        return this.http.put<ResponseModel>(this.url + '/updateSkill', userSkillModel)
-    }
 }

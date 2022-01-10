@@ -15,7 +15,5 @@ namespace BLL.Models
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
-
-        public SkillCategory Category { get; set; }
     }
 }

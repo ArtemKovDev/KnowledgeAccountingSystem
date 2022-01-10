@@ -13,35 +13,26 @@
     </thead>
     <tbody>
         <tr *ngFor="let u of userSkills">
-            <ng-template [ngIf]="userSkill?.id != u.id" [ngIfElse]="edit">
-                <td>{{u?.skill.name}}</td>
-                <td>{{u?.knowledgeLevel.name}}</td>
+                <td>                    
+                    <div *ngFor="let s of skills">
+                        <span *ngIf="s.id == u.skillId">
+                            {{s?.name}}
+                        </span>
+                    </div> 
+                </td>
                 <td>
-                    <button class="btn btn-sm btn-primary" (click)="editSkill(u)">Изменить</button>
+                    <div *ngFor="let k of knowledgeLevels">
+                        <span *ngIf="k.id == u.knowledgeLevelId">
+                            {{k?.name}}
+                        </span>
+                    </div> 
+                </td>
+                <td>
                     <button class="btn btn-sm btn-danger" (click)="delete(u)">Удалить</button>
                 </td>
-            </ng-template>
         </tr>
     </tbody>
 </table>
- 
-<!--шаблон для редактирования-->
-<ng-template #edit>
-    <td>
-        <select class="form-control" id="skillItems" [(ngModel)]="userSkill.skillId">            
-            <option *ngFor="let s of skills" value={{s.id}}>{{s.name}}</option>
-          </select>
-    </td>
-    <td>
-        <select class="form-control" id="KnowledgeLevelItems" [(ngModel)]="userSkill.knowledgeLevelId">            
-            <option *ngFor="let k of knowledgeLevels" value={{k.id}}>{{k.name}}</option>
-          </select>
-    </td>
-    <td>
-        <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success" />
-        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning" />
-    </td>
-</ng-template>
  
 <!--шаблон для добавления-->
 <ng-template #create>

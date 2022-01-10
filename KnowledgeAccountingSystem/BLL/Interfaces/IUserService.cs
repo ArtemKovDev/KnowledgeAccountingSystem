@@ -13,6 +13,5 @@ namespace BLL.Interfaces
         IEnumerable<UserSkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal);
         Task AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel);
         Task DeleteUserSkill(int userSkillId);
-        Task UpdateUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel);
     }
 }
