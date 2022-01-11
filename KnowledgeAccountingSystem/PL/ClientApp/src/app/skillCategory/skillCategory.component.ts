@@ -28,7 +28,7 @@ export class SkillCategoryComponent implements OnInit {
     save() {
         if (this.skillCategory.id == null) {
             this.skillCategoryService.createSkillCategory(this.skillCategory)
-                .subscribe((data: SkillCategoryModel) => this.skillCategories.push(data));
+                .subscribe(data => this.loadSkillCategories());
         } else {
             this.skillCategoryService.updateSkillCategory(this.skillCategory)
                 .subscribe(data => this.loadSkillCategories());

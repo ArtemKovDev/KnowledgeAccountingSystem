@@ -87,6 +87,7 @@ export class RoleComponent implements OnInit {
         this.userRoleModel = new UserRolesModel("", []);
     }
     delete(r: RoleModel) {
+        this.userRolementSuccess = false;
         this.showError = false;
         this.roleService.deleteRole(r)
             .subscribe(data => this.loadRoles(),
@@ -96,12 +97,15 @@ export class RoleComponent implements OnInit {
         });
     }
     add() {
+        this.userRolementSuccess = false;
         this.showError = false;
         this.cancel();
         this.tableMode = false;
     }
 
     userRolmentMode(r: string){
+        this.userRolementSuccess = false;
+        this.showError = false;
         this.userRoleModel.roles = [r];
     }
 }

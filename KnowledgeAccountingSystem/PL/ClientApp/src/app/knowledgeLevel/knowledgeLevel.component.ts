@@ -28,7 +28,7 @@ export class KnowledgeLevelComponent implements OnInit {
     save() {
         if (this.knowledgeLevel.id == null) {
             this.knowledgeLevelService.createKnowledgeLevel(this.knowledgeLevel)
-                .subscribe((data: KnowledgeLevelModel) => this.knowledgeLevels.push(data));
+                .subscribe(data => this.loadKnowledgeLevels());
         } else {
             this.knowledgeLevelService.updateKnowledgeLevel(this.knowledgeLevel)
                 .subscribe(data => this.loadKnowledgeLevels());
