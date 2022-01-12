@@ -1,12 +1,5 @@
 using AutoMapper;
 using BLL.Infrastructure;
-using BLL.Interfaces;
-using BLL.Services;
-using DAL;
-using DAL.Context;
-using DAL.Entities;
-using DAL.Interfaces;
-using DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,23 +33,11 @@ namespace PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AccountingDB")));
+            ServiceConfigurator.ConfigureServices(services, Configuration);
+
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Password.RequiredLength = 5;
-                options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddScoped<ISkillRepository, SkillRepository>();
-            services.AddScoped<ISkillCategoryRepository, SkillCategoryRepository>();
-            services.AddScoped<IKnowledgeLevelRepository, KnowledgeLevelRepository>();
-            services.AddScoped<IUserSkillRepository, UserSkillRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -68,15 +49,6 @@ namespace PL
             services.AddSingleton(mapper);
 
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
-
-            services.AddScoped<ISkillService, SkillService>();
-            services.AddScoped<ISkillCategoryService, SkillCategoryService>();
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IKnowledgeLevelService, KnowledgeLevelService>();
-            services.AddScoped<ISearchService, SearchService>();
-            services.AddScoped<IProfileService, ProfileService>();
 
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services
