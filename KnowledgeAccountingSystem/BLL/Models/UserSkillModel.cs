@@ -10,10 +10,10 @@ namespace BLL.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Skill is required")]
         public int SkillId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "KnowledgeLevel is required")]
         public int KnowledgeLevelId { get; set; }
     }
 }

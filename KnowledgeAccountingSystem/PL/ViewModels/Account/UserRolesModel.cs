@@ -4,9 +4,9 @@ namespace PL.ViewModels.Account
 {
     public class UserRolesModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        [Required, MinLength(1)]
+        [Required(ErrorMessage = "Role is required"), MinLength(1)]
         public string[] Roles { get; set; }
     }
 }

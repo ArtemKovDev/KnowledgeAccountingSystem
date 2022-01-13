@@ -1,4 +1,7 @@
 <h1>Skill list</h1>
+<div *ngIf="showError" class="alert alert-danger" role="alert">
+    <span [innerHTML]="errorMessage"></span>
+</div>
 <input type="button" value="Добавить" class="btn btn-info" (click)="add()" />
 <table *ngIf="tableMode; else create" class="table table-striped">
     <thead>

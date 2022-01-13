@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using PL.Filters;
 using PL.Helpers;
 using PL.ViewModels.Account;
 using System;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
+    [ModelStateActionFilter]
     [Authorize(Roles = "user")]
     [Route("api/[controller]")]
     [ApiController]
@@ -31,18 +33,15 @@ namespace PL.Controllers
         [HttpGet("getSkills")]
         public IActionResult GetSkills()
         {
-            return Ok(_userService.GetUserSkills(User));
+            return Ok(_userService.GetUserSkills(User.Identity.Name));
         }
 
         [HttpPost("addSkill")]
         public async Task<IActionResult> AddSkill(UserSkillModel userSkillModel)
         {
-            if (userSkillModel == null || !ModelState.IsValid)
-                return BadRequest();
-
             try
             {
-                await _userService.AddCurrentUserSkill(User, userSkillModel);
+                await _userService.AddCurrentUserSkill(User.Identity.Name, userSkillModel);
                 return Ok(userSkillModel);
             }
             catch (KASException ex)

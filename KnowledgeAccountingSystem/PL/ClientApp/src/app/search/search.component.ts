@@ -14,6 +14,9 @@ import { UserModel } from '../_models/user/userModel';
 })
 export class SearchComponent implements OnInit {
 
+    public errorMessage: string = '';
+    public showError: boolean;
+    
     searchTerm1: string;
     searchTerm2: string;
     searchTerm3: string;
@@ -36,6 +39,7 @@ export class SearchComponent implements OnInit {
     }
 
     loadAllUsers() {
+        this.showError = false;
         this.searchService.getUsers()
             .subscribe((data: UserModel[]) => {
                 this.users = data;
@@ -54,6 +58,7 @@ export class SearchComponent implements OnInit {
     }
 
     loadUsersBySkill(){
+        this.showError = false;
         if(this.skillId == null){
             return;
         }
@@ -65,13 +70,15 @@ export class SearchComponent implements OnInit {
     }
 
     loadUsersInRole(){
-        if(this.role == null){
-            return;
-        }
+        this.showError = false;
         this.searchService.getUsersInRole(this.role)
         .subscribe((data: UserModel[]) => {
             this.users = data;
             this.allUsers = this.users;
+        },
+        error => {
+            this.errorMessage = error;
+            this.showError = true;
         });
     }
 

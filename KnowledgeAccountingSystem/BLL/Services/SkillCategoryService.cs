@@ -26,7 +26,7 @@ namespace BLL.Services
         {
             if (model.Name == "")
             {
-                throw new KASException("Model is not valid");
+                throw new KASException(string.Join(';', "Model is not valid"));
             }
             var skillCategory = _mapper.Map<SkillCategoryModel, SkillCategory>(model);
             await _unitOfWork.SkillCategoryRepository.AddAsync(skillCategory);
@@ -58,7 +58,7 @@ namespace BLL.Services
         {
             if (model.Name == "")
             {
-                throw new KASException("Model is not valid");
+                throw new KASException(string.Join(';', "Model is not valid"));
             }
 
             var skillCategory = _mapper.Map<SkillCategoryModel, SkillCategory>(model);

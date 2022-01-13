@@ -10,8 +10,8 @@ namespace BLL.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<UserSkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal);
-        Task AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel);
+        IEnumerable<UserSkillModel> GetUserSkills(string userName);
+        Task AddCurrentUserSkill(string userName, UserSkillModel userSkillModel);
         Task DeleteUserSkill(int userSkillId);
     }
 }

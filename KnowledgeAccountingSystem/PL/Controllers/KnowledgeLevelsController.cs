@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace PL.Controllers
 {
     [CustomExceptionFilter]
+    [ModelStateActionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class KnowledgeLevelsController : ControllerBase
@@ -43,12 +44,8 @@ namespace PL.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(KnowledgeLevelModel knowledgeLevel)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.AddAsync(knowledgeLevel);
-                return Ok(knowledgeLevel);
-            }
-            return BadRequest(ModelState);
+            await _service.AddAsync(knowledgeLevel);
+            return Ok(knowledgeLevel);
         }
 
         [Authorize(Roles = "manager")]
@@ -63,12 +60,8 @@ namespace PL.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(KnowledgeLevelModel knowledgeLevel)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.UpdateAsync(knowledgeLevel);
-                return Ok(knowledgeLevel);
-            }
-            return BadRequest(ModelState);
+            await _service.UpdateAsync(knowledgeLevel);
+            return Ok(knowledgeLevel);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models.Account;
+using BLL.Validation;
 using DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -24,15 +25,31 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public UserModel GetCurrentUserCredentials(ClaimsPrincipal claimsPrincipal)
+        public UserModel GetCurrentUserCredentials(string userName)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == claimsPrincipal.Identity.Name);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+            if(user is null)
+            {
+                throw new KASException(string.Join(';', "User is not valid"));
+            }
+
             return _mapper.Map<User, UserModel>(user);
         }
 
-        public async Task UpdateCurrentUserCredentials(ClaimsPrincipal claimsPrincipal, UserModel userModel)
+        public async Task UpdateCurrentUserCredentials(string userName, UserModel userModel)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == claimsPrincipal.Identity.Name);
+            if(userModel.FirstName == "" || userModel.LastName == "" || userModel.PlaceOfWork == "" || userModel.Education == "")
+            {
+                throw new KASException(string.Join(';', "Model is not valid"));
+            }
+
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+            if (user is null)
+            {
+                throw new KASException(string.Join(';', "User is not valid"));
+            }
 
             user.FirstName = userModel.FirstName;
             user.LastName = userModel.LastName;
@@ -41,9 +58,15 @@ namespace BLL.Services
             await _userManager.UpdateAsync(user);
         }
 
-        public async Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal)
+        public async Task<IEnumerable<string>> GetUserRoles(string userName)
         {
-            User user = await _userManager.GetUserAsync(claimsPrincipal);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+            if (user is null)
+            {
+                throw new KASException(string.Join(';', "User is not valid"));
+            }
+
             return (await _userManager.GetRolesAsync(user)).ToList();
         }
     }

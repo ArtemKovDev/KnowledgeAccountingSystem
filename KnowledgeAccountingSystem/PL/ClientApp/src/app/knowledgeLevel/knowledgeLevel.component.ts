@@ -9,6 +9,9 @@ import { KnowledgeLevelService } from '../shared/services/knowledge-level.servic
 })
 export class KnowledgeLevelComponent implements OnInit {
  
+    public errorMessage: string = '';
+    public showError: boolean;
+
     knowledgeLevel: KnowledgeLevelModel = new KnowledgeLevelModel();   // изменяемый товар
     knowledgeLevels: KnowledgeLevelModel[];                // массив товаров
     tableMode: boolean = true;          // табличный режим
@@ -28,14 +31,23 @@ export class KnowledgeLevelComponent implements OnInit {
     save() {
         if (this.knowledgeLevel.id == null) {
             this.knowledgeLevelService.createKnowledgeLevel(this.knowledgeLevel)
-                .subscribe(data => this.loadKnowledgeLevels());
+                .subscribe(data => this.loadKnowledgeLevels(),
+        error => {
+            this.errorMessage = error;
+            this.showError = true;
+        });
         } else {
             this.knowledgeLevelService.updateKnowledgeLevel(this.knowledgeLevel)
-                .subscribe(data => this.loadKnowledgeLevels());
+                .subscribe(data => this.loadKnowledgeLevels(),
+            error => {
+                    this.errorMessage = error;
+                    this.showError = true;
+            });
         }
         this.cancel();
     }
     editKnowledgeLevel(s: KnowledgeLevelModel) {
+        this.showError = false;
         this.knowledgeLevel = s;
     }
     cancel() {
@@ -43,10 +55,12 @@ export class KnowledgeLevelComponent implements OnInit {
         this.tableMode = true;
     }
     delete(s: KnowledgeLevelModel) {
+        this.showError = false;
         this.knowledgeLevelService.deleteKnowledgeLevel(s.id)
             .subscribe(data => this.loadKnowledgeLevels());
     }
     add() {
+        this.showError = false;
         this.cancel();
         this.tableMode = false;
     }

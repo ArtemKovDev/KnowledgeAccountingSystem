@@ -9,8 +9,8 @@ namespace BLL.Interfaces
 {
     public interface IProfileService
     {
-        UserModel GetCurrentUserCredentials(ClaimsPrincipal claimsPrincipal);
-        Task UpdateCurrentUserCredentials(ClaimsPrincipal claimsPrincipal, UserModel userModel);
-        Task<IEnumerable<string>> GetUserRoles(ClaimsPrincipal claimsPrincipal);
+        UserModel GetCurrentUserCredentials(string userName);
+        Task UpdateCurrentUserCredentials(string userName, UserModel userModel);
+        Task<IEnumerable<string>> GetUserRoles(string userName);
     }
 }

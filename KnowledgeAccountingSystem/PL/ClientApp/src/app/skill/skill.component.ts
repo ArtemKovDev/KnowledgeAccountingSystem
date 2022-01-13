@@ -11,6 +11,9 @@ import { SkillModel } from '../_models/skill/skillModel';
 })
 export class SkillComponent implements OnInit {
  
+    public errorMessage: string = '';
+    public showError: boolean;
+
     skill: SkillModel = new SkillModel();   // изменяемый товар
     skills: SkillModel[];                // массив товаров
     skillCategories: SkillCategoryModel[];    
@@ -36,14 +39,23 @@ export class SkillComponent implements OnInit {
     save() {
         if (this.skill.id == null) {
             this.skillService.createSkill(this.skill)
-                .subscribe(data => this.loadSkills());
+                .subscribe(data => this.loadSkills(),
+        error => {
+            this.errorMessage = error;
+            this.showError = true;
+        });
         } else {
             this.skillService.updateSkill(this.skill)
-                .subscribe(data => this.loadSkills());
+                .subscribe(data => this.loadSkills(),
+            error => {
+                this.errorMessage = error;
+                this.showError = true;
+            });
         }
         this.cancel();
     }
     editSkill(s: SkillModel) {
+        this.showError = false;
         this.skill = s;
     }
     cancel() {
@@ -51,10 +63,12 @@ export class SkillComponent implements OnInit {
         this.tableMode = true;
     }
     delete(s: SkillModel) {
+        this.showError = false;
         this.skillService.deleteSkill(s.id)
             .subscribe(data => this.loadSkills());
     }
     add() {
+        this.showError = false;
         this.cancel();
         this.tableMode = false;
     }

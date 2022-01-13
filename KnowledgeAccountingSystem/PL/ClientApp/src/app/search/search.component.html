@@ -1,3 +1,6 @@
+<div *ngIf="showError" class="alert alert-danger" role="alert">
+  <span [innerHTML]="errorMessage"></span>
+</div>
   <span>Filter:</span>
   <div class="container row">
     <input class="form-control col-sm" type="text" name="searchTerm1" placeholder="Filter by user email"

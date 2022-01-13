@@ -71,8 +71,6 @@ namespace PL
                     };
                 });
 
-            services.AddControllers(options => { options.Filters.Add<CustomExceptionFilterAttribute>(); });
-
             services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

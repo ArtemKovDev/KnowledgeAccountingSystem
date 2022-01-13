@@ -31,25 +31,37 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<UserSkillModel> GetUserSkills(ClaimsPrincipal claimsPrincipal)
+        public IEnumerable<UserSkillModel> GetUserSkills(string userName)
         {
-            var userId = _userManager.GetUserId(claimsPrincipal);
-            var userSkills = _unitOfWork.UserSkillRepository.GetAllWithDetails().Where(ps => ps.UserId == userId).ToList();
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+            if (user is null)
+            {
+                throw new KASException(string.Join(';', "User is not valid"));
+            }
+
+            var userSkills = _unitOfWork.UserSkillRepository.GetAllWithDetails().Where(ps => ps.UserId == user.Id).ToList();
 
             return _mapper.Map<List<UserSkill>, List<UserSkillModel>>(userSkills);
         }
 
-        public async Task AddCurrentUserSkill(ClaimsPrincipal claimsPrincipal, UserSkillModel userSkillModel)
+        public async Task AddCurrentUserSkill(string userName, UserSkillModel userSkillModel)
         {
-            var userId = _userManager.GetUserId(claimsPrincipal);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
 
-            var userSkill = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(u => u.SkillId == userSkillModel.SkillId && u.UserId == userId);
-            if(userSkill != null)
+            if (user is null)
             {
-                throw new KASException("This skill already exists!");
+                throw new KASException(string.Join(';', "User is not valid"));
             }
 
-            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = userId, SkillId = userSkillModel.SkillId, KnowledgeLevelId = userSkillModel.KnowledgeLevelId });
+            var userSkill = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(u => u.SkillId == userSkillModel.SkillId && u.UserId == user.Id);
+
+            if(userSkill != null)
+            {
+                throw new KASException(string.Join(';', "This skill already exists!"));
+            }
+
+            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = user.Id, SkillId = userSkillModel.SkillId, KnowledgeLevelId = userSkillModel.KnowledgeLevelId });
             await _unitOfWork.SaveAsync();
         }
 

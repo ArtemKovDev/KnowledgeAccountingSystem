@@ -29,6 +29,12 @@ namespace BLL.Services
         public async Task<IdentityResult> AssignUserToRoles(UserRoles assignUserToRoles)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
+
+            if(user is null)
+            {
+                throw new KASException(string.Join(';', "This user does not exist"));
+            }
+
             var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
             
@@ -45,6 +51,12 @@ namespace BLL.Services
         public async Task<IdentityResult> RemoveUserFromRoles(UserRoles removeUserFromRoles)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == removeUserFromRoles.Email);
+
+            if (user is null)
+            {
+                throw new KASException(string.Join(';', "This user does not exist"));
+            }
+
             var roles = _roleManager.Roles.ToList().Where(r => removeUserFromRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
 

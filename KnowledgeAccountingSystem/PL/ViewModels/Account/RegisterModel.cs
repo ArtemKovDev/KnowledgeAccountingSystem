@@ -12,13 +12,13 @@ namespace PL.ViewModels.Account
  
         [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string PasswordConfirm { get; set; }
-        [Required]
+        [Required(ErrorMessage = "First name is required")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Place of work is required")]
         public string PlaceOfWork { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Education name is required")]
         public string Education { get; set; }
     }
 }

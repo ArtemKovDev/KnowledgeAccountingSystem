@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PL.Filters;
 using PL.ViewModels.Account;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace PL.Controllers
 {
+    [ModelStateActionFilter]
     [Authorize(Roles = "manager")]
     [Route("api/[controller]")]
     [ApiController]
@@ -33,9 +35,6 @@ namespace PL.Controllers
         [HttpPost("createRole")]
         public async Task<IActionResult> CreateRole(RoleModel model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest();
-
             try
             {
                 var result = await _roleService.CreateRole(model.Name);
@@ -64,9 +63,6 @@ namespace PL.Controllers
         [HttpDelete("deleteRole")]
         public async Task<IActionResult> DeleteRole(RoleModel model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest();
-
             try
             {
                 var result = await _roleService.DeleteRole(model.Name);
@@ -103,9 +99,6 @@ namespace PL.Controllers
         [HttpPost("assignUserToRole")]
         public async Task<IActionResult> AssignUserToRole(UserRolesModel model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest();
-
             try
             {
                 var result = await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(model));
@@ -135,9 +128,6 @@ namespace PL.Controllers
         [HttpDelete("removeUserFromRole")]
         public async Task<IActionResult> RemoveUserFromRole(UserRolesModel model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest();
-
             try
             {
                 var result = await _roleService.RemoveUserFromRoles(_mapper.Map<UserRolesModel, UserRoles>(model));

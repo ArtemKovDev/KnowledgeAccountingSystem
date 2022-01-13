@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace PL.Controllers
 {
     [CustomExceptionFilter]
+    [ModelStateActionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class SkillsController : ControllerBase
@@ -45,12 +46,8 @@ namespace PL.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(SkillModel skill)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.AddAsync(skill);
-                return Ok(skill);
-            }
-            return BadRequest(ModelState);
+            await _service.AddAsync(skill);
+            return Ok(skill);
         }
 
         [Authorize(Roles = "manager")]
@@ -65,12 +62,8 @@ namespace PL.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(SkillModel skill)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.UpdateAsync(skill);
-                return Ok(skill);
-            }
-            return BadRequest(ModelState);
+            await _service.UpdateAsync(skill);
+            return Ok(skill);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace PL.Controllers
 {
     [Authorize(Roles = "manager")]
     [CustomExceptionFilter]
+    [ModelStateActionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class SkillCategoriesController : ControllerBase
@@ -41,12 +42,8 @@ namespace PL.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(SkillCategoryModel skillCategory)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.AddAsync(skillCategory);
-                return Ok(skillCategory);
-            }
-            return BadRequest(ModelState);
+            await _service.AddAsync(skillCategory);
+            return Ok(skillCategory);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -58,12 +55,8 @@ namespace PL.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(SkillCategoryModel skillCategory)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.UpdateAsync(skillCategory);
-                return Ok(skillCategory);
-            }
-            return BadRequest(ModelState);
+            await _service.UpdateAsync(skillCategory);
+            return Ok(skillCategory);
         }
     }
 }

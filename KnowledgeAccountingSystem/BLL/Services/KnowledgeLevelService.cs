@@ -26,7 +26,7 @@ namespace BLL.Services
         {
             if (model.Name == "" || model.Description == "")
             {
-                throw new KASException("Model is not valid");
+                throw new KASException(string.Join(';', "Model is not valid"));
             }
             var knowledgeLevel = _mapper.Map<KnowledgeLevelModel, KnowledgeLevel>(model);
             await _unitOfWork.KnowledgeLevelRepository.AddAsync(knowledgeLevel);
@@ -58,7 +58,7 @@ namespace BLL.Services
         {
             if (model.Name == "" || model.Description == "")
             {
-                throw new KASException("Model is not valid");
+                throw new KASException(string.Join(';', "Model is not valid"));
             }
 
             var knowledgeLevel = _mapper.Map<KnowledgeLevelModel, KnowledgeLevel>(model);

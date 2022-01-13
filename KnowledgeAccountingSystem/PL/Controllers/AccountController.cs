@@ -41,9 +41,6 @@ namespace PL.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest();
-
             var result = await _accountService.Register(_mapper.Map<RegisterModel, Register>(model));
 
             if (!result.Succeeded)
