@@ -41,7 +41,7 @@ namespace PL.Controllers
         {
             try
             {
-                await _userService.AddCurrentUserSkill(User.Identity.Name, userSkillModel);
+                await _userService.AddUserSkill(User.Identity.Name, userSkillModel);
                 return Ok(userSkillModel);
             }
             catch (KASException ex)

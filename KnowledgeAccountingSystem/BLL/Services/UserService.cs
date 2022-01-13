@@ -45,7 +45,7 @@ namespace BLL.Services
             return _mapper.Map<List<UserSkill>, List<UserSkillModel>>(userSkills);
         }
 
-        public async Task AddCurrentUserSkill(string userName, UserSkillModel userSkillModel)
+        public async Task AddUserSkill(string userName, UserSkillModel userSkillModel)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
 

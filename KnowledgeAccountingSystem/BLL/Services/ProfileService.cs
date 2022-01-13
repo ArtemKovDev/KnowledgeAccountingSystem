@@ -25,7 +25,7 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public UserModel GetCurrentUserCredentials(string userName)
+        public UserModel GetUserCredentials(string userName)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
 
@@ -37,7 +37,7 @@ namespace BLL.Services
             return _mapper.Map<User, UserModel>(user);
         }
 
-        public async Task UpdateCurrentUserCredentials(string userName, UserModel userModel)
+        public async Task UpdateUserCredentials(string userName, UserModel userModel)
         {
             if(userModel.FirstName == "" || userModel.LastName == "" || userModel.PlaceOfWork == "" || userModel.Education == "")
             {

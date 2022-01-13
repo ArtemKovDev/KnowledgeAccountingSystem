@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     public interface IUserService
     {
         IEnumerable<UserSkillModel> GetUserSkills(string userName);
-        Task AddCurrentUserSkill(string userName, UserSkillModel userSkillModel);
+        Task AddUserSkill(string userName, UserSkillModel userSkillModel);
         Task DeleteUserSkill(int userSkillId);
     }
 }

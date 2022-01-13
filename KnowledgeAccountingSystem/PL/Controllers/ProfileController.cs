@@ -30,13 +30,13 @@ namespace PL.Controllers
         [HttpGet("getUserCredentials")]
         public IActionResult GetUserCredentials()
         {
-            return Ok(_profileService.GetCurrentUserCredentials(User.Identity.Name));
+            return Ok(_profileService.GetUserCredentials(User.Identity.Name));
         }
 
         [HttpPut("updateUserCredentials")]
         public async Task<IActionResult> UpdateUserCredentials(UserModel userModel)
         {
-            await _profileService.UpdateCurrentUserCredentials(User.Identity.Name, userModel);
+            await _profileService.UpdateUserCredentials(User.Identity.Name, userModel);
             return Ok(userModel);
         }
 
