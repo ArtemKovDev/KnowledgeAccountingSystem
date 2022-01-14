@@ -40,8 +40,8 @@ export class KnowledgeLevelComponent implements OnInit {
             this.knowledgeLevelService.updateKnowledgeLevel(this.knowledgeLevel)
                 .subscribe(data => this.loadKnowledgeLevels(),
             error => {
-                    this.errorMessage = error;
-                    this.showError = true;
+                this.errorMessage = error;
+                this.showError = true;
             });
         }
         this.cancel();

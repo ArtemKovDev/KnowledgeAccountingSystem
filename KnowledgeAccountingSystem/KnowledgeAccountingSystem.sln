@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{845B339C-C260-43BF-858D-C3CC9F3FAEB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowledgeAccountingSystem.Tests", "KnowledgeAccountingSystem.Tests\KnowledgeAccountingSystem.Tests.csproj", "{CA365CF0-503C-46AC-BFE1-59B03C70685A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{845B339C-C260-43BF-858D-C3CC9F3FAEB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{845B339C-C260-43BF-858D-C3CC9F3FAEB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{845B339C-C260-43BF-858D-C3CC9F3FAEB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA365CF0-503C-46AC-BFE1-59B03C70685A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA365CF0-503C-46AC-BFE1-59B03C70685A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA365CF0-503C-46AC-BFE1-59B03C70685A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA365CF0-503C-46AC-BFE1-59B03C70685A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
