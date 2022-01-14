@@ -13,7 +13,7 @@ namespace DAL.Context
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.Migrate();
+            Database.EnsureCreated();
         }
 
         public DbSet<Skill> Skills { get; set; }
@@ -102,13 +102,43 @@ namespace DAL.Context
                 NormalizedEmail = "MANAGER@GMAIL.COM",
                 EmailConfirmed = false,
                 PasswordHash = hasher.HashPassword(null, "Manager123$"),
-                SecurityStamp = string.Empty
+                SecurityStamp = string.Empty,
+                FirstName = "TestFirstName",
+                LastName = "TestLastName",
+                PlaceOfWork = "TestPlace",
+                Education = "TestEducation"
             });
 
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new[]
             {
-                RoleId = MANAGER_ROLE_ID,
-                UserId = MANAGER_ID
+                new IdentityUserRole<string>
+                { 
+                    RoleId = MANAGER_ROLE_ID,
+                    UserId = MANAGER_ID
+                },
+                new IdentityUserRole<string>
+                {
+                    RoleId = USER_ROLE_ID,
+                    UserId = MANAGER_ID
+                }
+            });
+
+            modelBuilder.Entity<UserSkill>().HasData(new[]
+            {
+                new UserSkill
+                {
+                    Id = 1,
+                    UserId = MANAGER_ID,
+                    SkillId = 6,
+                    KnowledgeLevelId = 2
+                },
+                new UserSkill
+                {
+                    Id = 2,
+                    UserId = MANAGER_ID,
+                    SkillId = 10,
+                    KnowledgeLevelId = 3
+                }
             });
         }
     }
