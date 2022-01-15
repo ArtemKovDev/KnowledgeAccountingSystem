@@ -7,20 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IKnowledgeLevelRepository
+    public interface IKnowledgeLevelRepository : IRepository<KnowledgeLevel>
     {
-        IQueryable<KnowledgeLevel> FindAll();
-
-        Task<KnowledgeLevel> GetByIdAsync(int id);
-
-        Task AddAsync(KnowledgeLevel entity);
-
-        void Update(KnowledgeLevel entity);
-
-        void Delete(KnowledgeLevel entity);
-
-        Task DeleteByIdAsync(int id);
-
         IQueryable<KnowledgeLevel> GetAllWithDetails();
 
         Task<KnowledgeLevel> GetByIdWithDetailsAsync(int id);

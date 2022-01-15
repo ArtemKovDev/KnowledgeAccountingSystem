@@ -6,10 +6,9 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class SkillCategory : BaseEntity
+    public class BaseEntity
     {
-        public string Name { get; set; }
-
-        public ICollection<Skill> Skills { get; set; }
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
     }
 }

@@ -6,11 +6,8 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class UserSkill 
+    public class UserSkill : BaseEntity
     {
-        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public string UserId { get; set; }
 
         public int SkillId { get; set; }

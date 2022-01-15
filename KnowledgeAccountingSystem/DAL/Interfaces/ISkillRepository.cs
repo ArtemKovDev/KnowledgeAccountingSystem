@@ -7,20 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface ISkillRepository 
+    public interface ISkillRepository : IRepository<Skill>
     {
-        IQueryable<Skill> FindAll();
-
-        Task<Skill> GetByIdAsync(int id);
-
-        Task AddAsync(Skill entity);
-
-        void Update(Skill entity);
-
-        void Delete(Skill entity);
-
-        Task DeleteByIdAsync(int id);
-
         IQueryable<Skill> GetAllWithDetails();
 
         Task<Skill> GetByIdWithDetailsAsync(int id);

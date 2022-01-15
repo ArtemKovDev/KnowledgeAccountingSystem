@@ -65,7 +65,7 @@ namespace KnowledgeAccountingSystem.Tests.DALTests
                 await skillCategoryRepository.DeleteByIdAsync(1);
                 await context.SaveChangesAsync();
 
-                Assert.AreEqual(4, context.KnowledgeLevels.Count(), message: "DeleteByIdAsync works incorrect ");
+                Assert.AreEqual(4, context.SkillCategories.Count(), message: "DeleteByIdAsync works incorrect ");
             }
         }
 
