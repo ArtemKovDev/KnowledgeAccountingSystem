@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public sealed class UserService : IUserService
+    public sealed class UserSkillService : IUserSkillService
     {
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UserService(UserManager<User> userManager,
+        public UserSkillService(UserManager<User> userManager,
             IUnitOfWork unitOfWork,
             IMapper mapper)
         {
@@ -47,6 +47,11 @@ namespace BLL.Services
 
         public async Task AddUserSkill(string userName, UserSkillModel userSkillModel)
         {
+            if(userSkillModel.SkillId == null || userSkillModel.KnowledgeLevelId == null)
+            {
+                throw new KASException(string.Join(';', "This model is not valid"));
+            }
+
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
 
             if (user is null)
@@ -61,7 +66,7 @@ namespace BLL.Services
                 throw new KASException(string.Join(';', "This skill already exists!"));
             }
 
-            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = user.Id, SkillId = userSkillModel.SkillId, KnowledgeLevelId = userSkillModel.KnowledgeLevelId });
+            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = user.Id, SkillId = userSkill.SkillId, KnowledgeLevelId = userSkill.KnowledgeLevelId });
             await _unitOfWork.SaveAsync();
         }
 

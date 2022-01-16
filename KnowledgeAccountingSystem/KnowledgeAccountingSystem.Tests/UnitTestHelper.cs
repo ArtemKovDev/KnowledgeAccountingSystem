@@ -1,4 +1,6 @@
-﻿using DAL.Context;
+﻿using AutoMapper;
+using BLL.Infrastructure;
+using DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,14 @@ namespace KnowledgeAccountingSystem.Tests
         public static void SeedData(ApplicationDbContext context)
         {
             context.SaveChanges();
+        }
+
+        public static Mapper CreateMapperProfile()
+        {
+            var myProfile = new AutomapperProfile();
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));
+
+            return new Mapper(configuration);
         }
     }
 }

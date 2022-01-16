@@ -1,3 +1,6 @@
+<div *ngIf="showError" class="alert alert-danger" role="alert">
+    <span [innerHTML]="errorMessage"></span>
+</div>
 <h1>Profile</h1>
 <table *ngIf="tableMode; else edit" class="table table-striped">
     <thead>

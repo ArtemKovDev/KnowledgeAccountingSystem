@@ -6,6 +6,7 @@ using DAL.Entities;
 using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,11 +42,8 @@ namespace BLL.Services
 
         public IEnumerable<KnowledgeLevelModel> GetAll()
         {
-            var knowledgeLevels = _unitOfWork.KnowledgeLevelRepository.GetAllWithDetails();
-            foreach (var k in knowledgeLevels)
-            {
-                yield return _mapper.Map<KnowledgeLevel, KnowledgeLevelModel>(k);
-            }
+            var knowledgeLevels = _unitOfWork.KnowledgeLevelRepository.GetAllWithDetails().ToList();
+            return _mapper.Map<List<KnowledgeLevel>, List<KnowledgeLevelModel>>(knowledgeLevels);
         }
 
         public async Task<KnowledgeLevelModel> GetByIdAsync(int id)

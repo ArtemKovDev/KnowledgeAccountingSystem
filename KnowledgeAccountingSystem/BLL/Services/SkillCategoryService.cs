@@ -6,6 +6,7 @@ using DAL.Entities;
 using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,11 +42,8 @@ namespace BLL.Services
 
         public IEnumerable<SkillCategoryModel> GetAll()
         {
-            var skillCategories = _unitOfWork.SkillCategoryRepository.GetAllWithDetails();
-            foreach (var s in skillCategories)
-            {
-                yield return _mapper.Map<SkillCategory, SkillCategoryModel>(s);
-            }
+            var skillCategories = _unitOfWork.SkillCategoryRepository.GetAllWithDetails().ToList();
+            return _mapper.Map<List<SkillCategory>, List<SkillCategoryModel>>(skillCategories);
         }
 
         public async Task<SkillCategoryModel> GetByIdAsync(int id)

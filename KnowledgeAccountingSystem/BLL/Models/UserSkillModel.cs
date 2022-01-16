@@ -11,9 +11,9 @@ namespace BLL.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Skill is required")]
-        public int SkillId { get; set; }
+        public int? SkillId { get; set; }
 
         [Required(ErrorMessage = "KnowledgeLevel is required")]
-        public int KnowledgeLevelId { get; set; }
+        public int? KnowledgeLevelId { get; set; }
     }
 }

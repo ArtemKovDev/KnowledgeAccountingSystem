@@ -39,7 +39,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     if(this._router.url === '/authentication/register' || this._router.url === '/roles' 
        || this._router.url === '/user' || this._router.url === '/knowledgelevels' 
        || this._router.url === '/skillcategories' || this._router.url === '/skills'
-       || this._router.url === '/search'){
+       || this._router.url === '/search' || this._router.url === '/profile'){
       let message = '';
       const values = Object.values(error.error.errors);
       values.map((m: string) => {

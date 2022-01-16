@@ -21,7 +21,7 @@ namespace BLL.Infrastructure
             services.AddScoped<ISkillCategoryService, SkillCategoryService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserSkillService, UserSkillService>();
             services.AddScoped<IKnowledgeLevelService, KnowledgeLevelService>();
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IProfileService, ProfileService>();

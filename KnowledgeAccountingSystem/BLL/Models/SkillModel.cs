@@ -17,6 +17,6 @@ namespace BLL.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Category is required")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

@@ -9,6 +9,9 @@ import { UserModel } from '../_models/user/userModel';
 })
 export class ProfileComponent implements OnInit {
 
+    public errorMessage: string = '';
+    public showError: boolean;
+
     currentUser: UserModel;
     userRoles: String[];
     tableMode: boolean = true;  
@@ -29,10 +32,15 @@ export class ProfileComponent implements OnInit {
     }
     save() {
         this.profileService.updateUserCredentials(this.currentUser)
-            .subscribe((data: UserModel) => this.currentUser = data);
+            .subscribe(data => this.loadUserModel(),
+        error => {
+            this.errorMessage = error;
+            this.showError = true;
+        });
         this.cancel();
     }
     editUser() {
+        this.showError = false;
         this.tableMode = false;
     }
     cancel() {

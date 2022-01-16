@@ -23,9 +23,9 @@ namespace PL.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserSkillService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserSkillService userService)
         {
             _userService = userService;
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IUserService
+    public interface IUserSkillService
     {
         IEnumerable<UserSkillModel> GetUserSkills(string userName);
         Task AddUserSkill(string userName, UserSkillModel userSkillModel);

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -23,7 +24,7 @@ namespace BLL.Services
         }
         public async Task AddAsync(SkillModel model)
         {
-            if (model.Name == "" || model.Description == "")
+            if (model.Name == "" || model.Description == "" || model.CategoryId == null)
             {
                 throw new KASException(string.Join(';', "Model is not valid"));
             }
@@ -40,11 +41,8 @@ namespace BLL.Services
 
         public IEnumerable<SkillModel> GetAll()
         {
-            var skills = _unitOfWork.SkillRepository.GetAllWithDetails();
-            foreach (var s in skills)
-            {
-                yield return _mapper.Map<Skill, SkillModel>(s);
-            }
+            var skills = _unitOfWork.SkillRepository.GetAllWithDetails().ToList();
+                return _mapper.Map<List<Skill>, List<SkillModel>>(skills);
         }
 
         public async Task<SkillModel> GetByIdAsync(int id)
@@ -55,7 +53,7 @@ namespace BLL.Services
 
         public async Task UpdateAsync(SkillModel model)
         {
-            if (model.Name == "" || model.Description == "")
+            if (model.Name == "" || model.Description == "" || model.CategoryId == null)
             {
                 throw new KASException(string.Join(';', "Model is not valid"));
             }
