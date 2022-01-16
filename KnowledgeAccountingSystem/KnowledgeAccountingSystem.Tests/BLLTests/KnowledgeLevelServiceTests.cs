@@ -133,7 +133,7 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         public async Task KnowledgeLevelService_UpdateAsync_UpdatesKnowledgeLevel()
         {
             //Arrange
-            var knowledgeLevel = new KnowledgeLevelModel { Name = "TestName", Description = "TestDescription" };
+            var knowledgeLevel = new KnowledgeLevelModel { Id = 1, Name = "TestName", Description = "TestDescription" };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.KnowledgeLevelRepository.Update(It.IsAny<KnowledgeLevel>()));
             var knowledgeLevelService = new KnowledgeLevelService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
@@ -147,10 +147,22 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         }
 
         [Test]
+        public void KnowledgeLevelService_UpdateAsync_ThrowsKASExceptionWithEmptyId()
+        {
+            //Arrange
+            var knowledgeLevel = new KnowledgeLevelModel { Id = null, Name = "TestName", Description = "TestDescription" };
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork.Setup(x => x.KnowledgeLevelRepository.Update(It.IsAny<KnowledgeLevel>()));
+            var knowledgeLevelService = new KnowledgeLevelService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
+
+            Assert.ThrowsAsync<KASException>(() => knowledgeLevelService.UpdateAsync(knowledgeLevel));
+        }
+
+        [Test]
         public void KnowledgeLevelService_UpdateAsync_ThrowsKASExceptionWithEmptyName()
         {
             //Arrange
-            var knowledgeLevel = new KnowledgeLevelModel { Name = "", Description = "TestDescription" };
+            var knowledgeLevel = new KnowledgeLevelModel { Id = 1, Name = "", Description = "TestDescription" };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.KnowledgeLevelRepository.Update(It.IsAny<KnowledgeLevel>()));
             var knowledgeLevelService = new KnowledgeLevelService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
@@ -162,7 +174,7 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         public void KnowledgeLevelService_UpdateAsync_ThrowsKASExceptionWithEmptyDescription()
         {
             //Arrange
-            var knowledgeLevel = new KnowledgeLevelModel { Name = "TestName", Description = "" };
+            var knowledgeLevel = new KnowledgeLevelModel { Id = 1, Name = "TestName", Description = "" };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.KnowledgeLevelRepository.Update(It.IsAny<KnowledgeLevel>()));
             var knowledgeLevelService = new KnowledgeLevelService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());

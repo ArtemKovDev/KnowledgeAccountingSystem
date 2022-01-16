@@ -10,8 +10,18 @@ using System.Text;
 
 namespace PL.Helpers
 {
+    /// <summary>
+    /// Class that provides method for generating Jwt
+    /// </summary>
     public static class JwtHelper
     {
+        /// <summary>
+        /// Generates serialized Jwt token string for user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="roles"></param>
+        /// <param name="jwtSettings"></param>
+        /// <returns>Serialized Token</returns>
         public static string GenerateJwt(UserModel user, IEnumerable<string> roles, JwtSettings jwtSettings)
         {
             if (user is null) throw new KASException($"Jwt generation not proceeded - {nameof(user)} is null");

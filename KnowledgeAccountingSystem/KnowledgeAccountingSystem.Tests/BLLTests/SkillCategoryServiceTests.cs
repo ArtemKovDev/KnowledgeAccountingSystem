@@ -146,5 +146,17 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
 
             Assert.ThrowsAsync<KASException>(() => skillCategoryService.UpdateAsync(skillCategory));
         }
+
+        [Test]
+        public void SkillCategoryService_UpdateAsync_ThrowsKASExceptionWithEmptyId()
+        {
+            //Arrange
+            var skillCategory = new SkillCategoryModel { Id = null, Name = "Test" };
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork.Setup(x => x.SkillCategoryRepository.Update(It.IsAny<SkillCategory>()));
+            var skillCategoryService = new SkillCategoryService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
+
+            Assert.ThrowsAsync<KASException>(() => skillCategoryService.UpdateAsync(skillCategory));
+        }
     }
 }

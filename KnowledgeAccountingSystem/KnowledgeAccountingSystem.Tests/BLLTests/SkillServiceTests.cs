@@ -148,7 +148,7 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         public async Task SkillService_UpdateAsync_UpdatesSkillCategory()
         {
             //Arrange
-            var skill = new SkillModel { Name = "TestCategory", Description = "TestDescription", CategoryId = 2 };
+            var skill = new SkillModel { Id = 1, Name = "TestCategory", Description = "TestDescription", CategoryId = 2 };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.SkillRepository.Update(It.IsAny<Skill>()));
             var skillService = new SkillService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
@@ -162,10 +162,22 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         }
 
         [Test]
+        public void SkillService_UpdateAsync_ThrowsKASExceptionWithEmptyId()
+        {
+            //Arrange
+            var skill = new SkillModel { Id = null, Name = "TestCategory", Description = "TestDescription", CategoryId = 2 };
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork.Setup(x => x.SkillRepository.Update(It.IsAny<Skill>()));
+            var skillService = new SkillService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
+
+            Assert.ThrowsAsync<KASException>(() => skillService.UpdateAsync(skill));
+        }
+
+        [Test]
         public void SkillService_UpdateAsync_ThrowsKASExceptionWithEmptyName()
         {
             //Arrange
-            var skill = new SkillModel { Name = "", Description = "TestDescription", CategoryId = 2 };
+            var skill = new SkillModel { Id = 1, Name = "", Description = "TestDescription", CategoryId = 2 };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.SkillRepository.Update(It.IsAny<Skill>()));
             var skillService = new SkillService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
@@ -177,7 +189,7 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         public void SkillService_UpdateAsync_ThrowsKASExceptionWithEmptyDescription()
         {
             //Arrange
-            var skill = new SkillModel { Name = "TestCategory", Description = "", CategoryId = 2 };
+            var skill = new SkillModel { Id = 1, Name = "TestCategory", Description = "", CategoryId = 2 };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.SkillRepository.Update(It.IsAny<Skill>()));
             var skillService = new SkillService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
@@ -189,7 +201,7 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         public void SkillService_UpdateAsync_ThrowsKASExceptionWithEmptyCategoryId()
         {
             //Arrange
-            var skill = new SkillModel { Name = "TestCategory", Description = "TestDescription", CategoryId = null };
+            var skill = new SkillModel { Id = 1, Name = "TestCategory", Description = "TestDescription", CategoryId = null };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.SkillRepository.Update(It.IsAny<Skill>()));
             var skillService = new SkillService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
