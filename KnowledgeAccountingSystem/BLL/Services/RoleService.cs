@@ -18,12 +18,15 @@ namespace BLL.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IMapper _mapper;
 
         public RoleService(UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
 
         public async Task<IdentityResult> AssignUserToRoles(UserRoles assignUserToRoles)
@@ -94,9 +97,9 @@ namespace BLL.Services
             return await _roleManager.Roles.ToListAsync();
         }
 
-        public async Task<IEnumerable<string>> GetRoles(User user)
+        public async Task<IEnumerable<string>> GetRoles(UserModel userModel)
         {
-            return (await _userManager.GetRolesAsync(user)).ToList();
+            return (await _userManager.GetRolesAsync(_mapper.Map<UserModel, User>(userModel))).ToList();
         }
     }
 }

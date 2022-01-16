@@ -15,10 +15,12 @@ namespace BLL.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
-        public AccountService(UserManager<User> userManager)
+        public AccountService(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<IdentityResult> Register(Register user)
@@ -36,11 +38,11 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<User> Logon(Logon logon)
+        public async Task<UserModel> Logon(Logon logon)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == logon.Email);
 
-            return await _userManager.CheckPasswordAsync(user, logon.Password) ? user : null;
+            return await _userManager.CheckPasswordAsync(user, logon.Password) ? _mapper.Map<User, UserModel>(user) : null;
         }
     }
 }

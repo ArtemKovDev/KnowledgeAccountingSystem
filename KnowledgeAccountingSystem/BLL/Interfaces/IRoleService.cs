@@ -14,7 +14,7 @@ namespace BLL.Interfaces
         Task<IdentityResult> RemoveUserFromRoles(UserRoles assignUserToRoles);
         Task<IdentityResult> CreateRole(string roleName);
         Task<IdentityResult> DeleteRole(string roleName);
-        Task<IEnumerable<string>> GetRoles(User user);
+        Task<IEnumerable<string>> GetRoles(UserModel userModel);
         Task<IEnumerable<IdentityRole>> GetRoles();
     }
 }

@@ -1,4 +1,4 @@
-﻿using DAL.Entities;
+﻿using BLL.Models.Account;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -11,14 +11,14 @@ namespace PL.Helpers
 {
     public static class JwtHelper
     {
-        public static string GenerateJwt(User user, IEnumerable<string> roles, JwtSettings jwtSettings)
+        public static string GenerateJwt(UserModel user, IEnumerable<string> roles, JwtSettings jwtSettings)
         {
             if (user is null) throw new Exception($"Jwt generation not proceeded - {nameof(user)} is null");
 
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
