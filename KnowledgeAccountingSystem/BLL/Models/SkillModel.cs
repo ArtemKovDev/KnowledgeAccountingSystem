@@ -8,7 +8,7 @@ namespace BLL.Models
 {
     public class SkillModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }

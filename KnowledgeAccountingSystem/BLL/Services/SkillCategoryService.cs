@@ -57,7 +57,7 @@ namespace BLL.Services
 
         public async Task UpdateAsync(SkillCategoryModel model)
         {
-            if (model.Name == "")
+            if (model.Id == null || model.Name == "")
             {
                 throw new KASException(string.Join(';', "Model is not valid"));
             }

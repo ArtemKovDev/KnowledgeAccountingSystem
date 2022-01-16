@@ -57,7 +57,7 @@ namespace BLL.Services
 
         public async Task UpdateAsync(KnowledgeLevelModel model)
         {
-            if (model.Name == "" || model.Description == "")
+            if (model.Id == null || model.Name == "" || model.Description == "")
             {
                 throw new KASException(string.Join(';', "Model is not valid"));
             }
