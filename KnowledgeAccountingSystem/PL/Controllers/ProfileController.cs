@@ -36,7 +36,7 @@ namespace PL.Controllers
         [HttpPut("updateUserCredentials")]
         public async Task<IActionResult> UpdateUserCredentials(UserModel userModel)
         {
-            await _profileService.UpdateUserCredentials(User.Identity.Name, userModel);
+            await _profileService.UpdateUserCredentials(userModel);
             return Ok(userModel);
         }
 

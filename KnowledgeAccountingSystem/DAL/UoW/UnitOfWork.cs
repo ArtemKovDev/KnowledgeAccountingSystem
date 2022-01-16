@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
+    ///<inheritdoc/>
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationDbContext db;
@@ -16,7 +17,9 @@ namespace DAL
         private UserSkillRepository userSkillRepository;
         private SkillCategoryRepository skillCategoryRepository;
         private KnowledgeLevelRepository knowledgeLevelRepository;
-
+        /// <summary>
+        /// Initialize new ApplicationDbContext with injected DbContextOptions
+        /// </summary>
         public UnitOfWork(DbContextOptions<ApplicationDbContext> options)
         {
             db = new ApplicationDbContext(options);

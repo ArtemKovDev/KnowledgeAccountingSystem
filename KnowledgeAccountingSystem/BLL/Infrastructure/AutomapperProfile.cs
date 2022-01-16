@@ -9,6 +9,9 @@ using System.Text;
 
 namespace BLL.Infrastructure
 {
+    /// <summary>
+    /// Provide a named configuration for maps entities to DTO
+    /// </summary>
     public class AutomapperProfile : Profile
     {
         public AutomapperProfile()

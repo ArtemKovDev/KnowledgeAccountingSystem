@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace PL.Infrastructure
 {
+    /// <summary>
+    /// Provide a named configuration for maps ViewModels to DTO
+    /// </summary>
     public class ViewAutomapperProfile : Profile
     {
         public ViewAutomapperProfile()

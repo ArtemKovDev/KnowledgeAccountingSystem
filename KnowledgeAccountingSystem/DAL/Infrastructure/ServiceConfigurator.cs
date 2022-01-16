@@ -12,8 +12,14 @@ using System.Text;
 
 namespace DAL.Infrastructure
 {
+    /// <summary>
+    /// Define method for service configuring
+    /// </summary>
     public class ServiceConfigurator
     {
+        /// <summary>
+        /// Add services of DAL
+        /// </summary>
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>

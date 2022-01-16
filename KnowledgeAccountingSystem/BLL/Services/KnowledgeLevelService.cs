@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class KnowledgeLevelService
         : IKnowledgeLevelService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UnitOfWork and Mapper
+        /// </summary>
         public KnowledgeLevelService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;

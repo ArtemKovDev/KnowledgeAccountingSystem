@@ -16,12 +16,15 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public sealed class UserSkillService : IUserSkillService
     {
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UserManager, UnitOfWork and Mapper
+        /// </summary>
         public UserSkillService(UserManager<User> userManager,
             IUnitOfWork unitOfWork,
             IMapper mapper)

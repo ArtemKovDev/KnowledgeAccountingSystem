@@ -1,4 +1,5 @@
 ﻿using BLL.Models.Account;
+using BLL.Validation;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace PL.Helpers
     {
         public static string GenerateJwt(UserModel user, IEnumerable<string> roles, JwtSettings jwtSettings)
         {
-            if (user is null) throw new Exception($"Jwt generation not proceeded - {nameof(user)} is null");
+            if (user is null) throw new KASException($"Jwt generation not proceeded - {nameof(user)} is null");
 
             var claims = new List<Claim>
             {

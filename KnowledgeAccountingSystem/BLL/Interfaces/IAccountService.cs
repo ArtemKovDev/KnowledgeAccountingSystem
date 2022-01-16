@@ -17,14 +17,14 @@ namespace BLL.Interfaces
         /// Execute user registration
         /// </summary>
         /// <param name="user">Register model</param>
-        /// <returns>Result of action</returns>
+        /// <returns>A task that represents the asynchronous Register operation and contains IdentityResult</returns>
         Task<IdentityResult> Register(Register user);
 
         /// <summary>
         /// Execute user logon
         /// </summary>
         /// <param name="logon">Logon model</param>
-        /// <returns>User model</returns>
+        /// <returns>A task that represents the asynchronous Logon operation and contains User model</returns>
         Task<UserModel> Logon(Logon logon);
     }
 }

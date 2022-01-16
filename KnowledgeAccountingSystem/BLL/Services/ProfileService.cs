@@ -13,11 +13,14 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class ProfileService : IProfileService
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UserManager and Mapper
+        /// </summary>
         public ProfileService(UserManager<User> userManager,
             IMapper mapper)
         {
@@ -37,14 +40,14 @@ namespace BLL.Services
             return _mapper.Map<User, UserModel>(user);
         }
 
-        public async Task UpdateUserCredentials(string userName, UserModel userModel)
+        public async Task UpdateUserCredentials(UserModel userModel)
         {
-            if(userModel.FirstName == "" || userModel.LastName == "" || userModel.PlaceOfWork == "" || userModel.Education == "")
+            if(userModel.Email == "" || userModel.FirstName == "" || userModel.LastName == "" || userModel.PlaceOfWork == "" || userModel.Education == "")
             {
                 throw new KASException(string.Join(';', "Model is not valid"));
             }
 
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userModel.Email);
 
             if (user is null)
             {

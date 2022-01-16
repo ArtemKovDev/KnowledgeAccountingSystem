@@ -12,11 +12,14 @@ using System.Linq;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class SkillService : ISkillService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UnitOfWork and Mapper
+        /// </summary>
         public SkillService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;

@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
+    ///<inheritdoc/>
     public abstract class BaseRepository<T>
             : IRepository<T>
             where T : BaseEntity
     {
         private readonly DbSet<T> _set;
         private readonly DbContext _context;
-
+        /// <summary>
+        /// Inject DbContext instance
+        /// </summary>
         public BaseRepository(DbContext context)
         {
             _context = context;

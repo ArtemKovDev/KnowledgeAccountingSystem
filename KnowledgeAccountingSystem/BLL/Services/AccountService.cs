@@ -12,11 +12,14 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UserManager and Mapper
+        /// </summary>
         public AccountService(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;

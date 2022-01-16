@@ -14,12 +14,15 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class RoleService : IRoleService
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UserManager, RoleManager and Mapper 
+        /// </summary>
         public RoleService(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             IMapper mapper)
@@ -29,16 +32,16 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IdentityResult> AssignUserToRoles(UserRoles assignUserToRoles)
+        public async Task<IdentityResult> AssignUserToRoles(UserRoles userRoles)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == assignUserToRoles.Email);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userRoles.Email);
 
             if(user is null)
             {
                 throw new KASException(string.Join(';', "This user does not exist"));
             }
 
-            var roles = _roleManager.Roles.ToList().Where(r => assignUserToRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
+            var roles = _roleManager.Roles.ToList().Where(r => userRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
             
             if(roles.Count == 0)
@@ -51,16 +54,16 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<IdentityResult> RemoveUserFromRoles(UserRoles removeUserFromRoles)
+        public async Task<IdentityResult> RemoveUserFromRoles(UserRoles userRoles)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == removeUserFromRoles.Email);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userRoles.Email);
 
             if (user is null)
             {
                 throw new KASException(string.Join(';', "This user does not exist"));
             }
 
-            var roles = _roleManager.Roles.ToList().Where(r => removeUserFromRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
+            var roles = _roleManager.Roles.ToList().Where(r => userRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
 
             if (roles.Count == 0)

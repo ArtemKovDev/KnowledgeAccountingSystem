@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class SearchService : ISearchService
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-
+        /// <summary>
+        /// Inject instances of the UserManager, UnitOfWork and Mapper
+        /// </summary>
         public SearchService(UserManager<User> userManager,
             IUnitOfWork unitOfWork,
             IMapper mapper)

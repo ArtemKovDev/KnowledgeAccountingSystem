@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
+    ///<inheritdoc/>
     public class SkillCategoryService
         : ISkillCategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Inject instances of the UnitOfWork and Mapper
+        /// </summary>
         public SkillCategoryService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
