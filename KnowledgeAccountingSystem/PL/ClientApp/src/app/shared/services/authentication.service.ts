@@ -16,11 +16,11 @@ export class AuthenticationService {
   constructor(private _http: HttpClient, private _jwtHelper: JwtHelperService) { }
 
   public registerUser = (body: RegisterModel) => {
-    return this._http.post<RegistrationResponseModel> ("https://localhost:44335/api/account/register", body);
+    return this._http.post<RegistrationResponseModel> ("/api/account/register", body);
   }
 
   public loginUser = (body: LogonModel) => {
-    return this._http.post<AuthResponseModel>("https://localhost:44335/api/account/logon", body);
+    return this._http.post<AuthResponseModel>("/api/account/logon", body);
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {

@@ -64,7 +64,7 @@ namespace BLL.Services
                 throw new KASException(string.Join(';', "This skill already exists!"));
             }
 
-            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = user.Id, SkillId = userSkill.SkillId, KnowledgeLevelId = userSkill.KnowledgeLevelId });
+            await _unitOfWork.UserSkillRepository.AddAsync(new UserSkill { UserId = user.Id, SkillId = (int)userSkillModel.SkillId, KnowledgeLevelId = (int)userSkillModel.KnowledgeLevelId });
             await _unitOfWork.SaveAsync();
         }
 
