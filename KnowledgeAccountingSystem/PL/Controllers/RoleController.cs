@@ -3,7 +3,6 @@ using BLL.Interfaces;
 using BLL.Models.Account;
 using BLL.Validation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PL.Filters;
@@ -46,7 +45,7 @@ namespace PL.Controllers
                 }
                 return Ok();
             }
-            catch(KASException ex)
+            catch (KASException ex)
             {
                 return BadRequest(new ResponseModel { Errors = new List<string>() { ex.Message }, IsSuccessful = false });
             }

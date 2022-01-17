@@ -4,10 +4,8 @@ using BLL.Models.Account;
 using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -47,10 +45,10 @@ namespace BLL.Services
         {
             var users = _userManager.Users.ToList();
             var filteredUsers = new List<User>() { };
-            foreach(var u in users)
+            foreach (var u in users)
             {
                 var roles = (await _userManager.GetRolesAsync(u)).ToList();
-                if(roles.Contains(roleName) || roles.Contains(roleName.ToUpper()))
+                if (roles.Contains(roleName) || roles.Contains(roleName.ToUpper()))
                 {
                     filteredUsers.Add(u);
                 }

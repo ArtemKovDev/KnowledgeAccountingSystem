@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BLL.Validation
 {
@@ -9,6 +7,6 @@ namespace BLL.Validation
     /// </summary>
     public class KASException : Exception
     {
-        public KASException(string massage): base(massage) { }
+        public KASException(string massage) : base(massage) { }
     }
 }

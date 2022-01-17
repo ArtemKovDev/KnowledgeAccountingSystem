@@ -2,12 +2,8 @@
 using BLL.Interfaces;
 using BLL.Models.Account;
 using DAL.Entities;
-using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services

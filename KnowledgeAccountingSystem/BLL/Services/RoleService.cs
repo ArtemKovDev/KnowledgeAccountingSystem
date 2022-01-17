@@ -3,13 +3,11 @@ using BLL.Interfaces;
 using BLL.Models.Account;
 using BLL.Validation;
 using DAL.Entities;
-using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -36,15 +34,15 @@ namespace BLL.Services
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == userRoles.Email);
 
-            if(user is null)
+            if (user is null)
             {
                 throw new KASException(string.Join(';', "This user does not exist"));
             }
 
             var roles = _roleManager.Roles.ToList().Where(r => userRoles.Roles.Contains(r.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(r => r.NormalizedName).ToList();
-            
-            if(roles.Count == 0)
+
+            if (roles.Count == 0)
             {
                 throw new KASException(string.Join(';', "This user role does not exist"));
             }

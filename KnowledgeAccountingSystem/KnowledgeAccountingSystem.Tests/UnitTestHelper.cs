@@ -3,8 +3,6 @@ using BLL.Infrastructure;
 using DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KnowledgeAccountingSystem.Tests
 {

@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
-using BLL.Models.Account;
 using BLL.Validation;
 using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -50,7 +45,7 @@ namespace BLL.Services
 
         public async Task AddUserSkill(string userName, UserSkillModel userSkillModel)
         {
-            if(userSkillModel.SkillId == null || userSkillModel.KnowledgeLevelId == null)
+            if (userSkillModel.SkillId == null || userSkillModel.KnowledgeLevelId == null)
             {
                 throw new KASException(string.Join(';', "This model is not valid"));
             }
@@ -64,7 +59,7 @@ namespace BLL.Services
 
             var userSkill = _unitOfWork.UserSkillRepository.FindAll().FirstOrDefault(u => u.SkillId == userSkillModel.SkillId && u.UserId == user.Id);
 
-            if(userSkill != null)
+            if (userSkill != null)
             {
                 throw new KASException(string.Join(';', "This skill already exists!"));
             }

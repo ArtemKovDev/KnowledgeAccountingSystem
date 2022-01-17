@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAL.Context
 {
@@ -112,7 +109,7 @@ namespace DAL.Context
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new[]
             {
                 new IdentityUserRole<string>
-                { 
+                {
                     RoleId = MANAGER_ROLE_ID,
                     UserId = MANAGER_ID
                 },

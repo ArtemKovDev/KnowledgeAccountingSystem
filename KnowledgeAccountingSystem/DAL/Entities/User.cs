@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DAL.Entities
 {
@@ -15,6 +13,6 @@ namespace DAL.Entities
 
         public string Education { get; set; }
 
-        public ICollection<UserSkill> Skills { get; set; }       
+        public ICollection<UserSkill> Skills { get; set; }
     }
 }

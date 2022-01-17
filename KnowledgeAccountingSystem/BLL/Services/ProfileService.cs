@@ -4,11 +4,8 @@ using BLL.Models.Account;
 using BLL.Validation;
 using DAL.Entities;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -32,7 +29,7 @@ namespace BLL.Services
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
 
-            if(user is null)
+            if (user is null)
             {
                 throw new KASException(string.Join(';', "User is not valid"));
             }
@@ -42,7 +39,7 @@ namespace BLL.Services
 
         public async Task UpdateUserCredentials(UserModel userModel)
         {
-            if(userModel.Email == "" || userModel.FirstName == "" || userModel.LastName == "" || userModel.PlaceOfWork == "" || userModel.Education == "")
+            if (userModel.Email == "" || userModel.FirstName == "" || userModel.LastName == "" || userModel.PlaceOfWork == "" || userModel.Education == "")
             {
                 throw new KASException(string.Join(';', "Model is not valid"));
             }

@@ -45,8 +45,8 @@ namespace PL.Helpers
                 issuer: jwtSettings.Issuer,
                 audience: jwtSettings.Issuer,
                 claims,
-                expires : expires,
-                signingCredentials : creds
+                expires: expires,
+                signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);

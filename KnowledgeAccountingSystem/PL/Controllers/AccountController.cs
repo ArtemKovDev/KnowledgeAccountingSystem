@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
-using BLL.Models;
 using BLL.Models.Account;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PL.Filters;
 using PL.Helpers;
 using PL.ViewModels.Account;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,7 +45,7 @@ namespace PL.Controllers
                 return BadRequest(new RegistrationResponseModel { Errors = errors, IsSuccessfulRegistration = false });
             }
 
-            await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(new UserRolesModel { Email = model.Email, Roles = new string[]{ "user" } }));
+            await _roleService.AssignUserToRoles(_mapper.Map<UserRolesModel, UserRoles>(new UserRolesModel { Email = model.Email, Roles = new string[] { "user" } }));
 
             return Created(string.Empty, string.Empty);
         }

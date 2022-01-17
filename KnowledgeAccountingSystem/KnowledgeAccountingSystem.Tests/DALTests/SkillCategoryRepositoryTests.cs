@@ -2,10 +2,7 @@
 using DAL.Entities;
 using DAL.Repositories;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KnowledgeAccountingSystem.Tests.DALTests
@@ -76,7 +73,7 @@ namespace KnowledgeAccountingSystem.Tests.DALTests
             {
                 var skillCategoryRepository = new SkillCategoryRepository(context);
 
-                var skillCategory = new SkillCategory() { Id = 1, Name = "Test"};
+                var skillCategory = new SkillCategory() { Id = 1, Name = "Test" };
 
                 skillCategoryRepository.Update(skillCategory);
                 await context.SaveChangesAsync();

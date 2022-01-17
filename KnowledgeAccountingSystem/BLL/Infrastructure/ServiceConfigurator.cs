@@ -1,13 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Services;
-using DAL.Context;
-using DAL.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BLL.Infrastructure
 {

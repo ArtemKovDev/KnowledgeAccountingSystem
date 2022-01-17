@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
+using BLL.Validation;
 using DAL.Entities;
 using DAL.Interfaces;
-using BLL.Validation;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -45,7 +43,7 @@ namespace BLL.Services
         public IEnumerable<SkillModel> GetAll()
         {
             var skills = _unitOfWork.SkillRepository.GetAllWithDetails().ToList();
-                return _mapper.Map<List<Skill>, List<SkillModel>>(skills);
+            return _mapper.Map<List<Skill>, List<SkillModel>>(skills);
         }
 
         public async Task<SkillModel> GetByIdAsync(int id)

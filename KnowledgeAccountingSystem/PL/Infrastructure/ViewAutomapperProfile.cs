@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using BLL.Models;
 using BLL.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using PL.ViewModels.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PL.Infrastructure
 {

@@ -5,10 +5,8 @@ using DAL.Entities;
 using DAL.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KnowledgeAccountingSystem.Tests.BLLTests
@@ -122,7 +120,7 @@ namespace KnowledgeAccountingSystem.Tests.BLLTests
         public async Task SkillCategoryService_UpdateAsync_UpdatesSkillCategory()
         {
             //Arrange
-            var skillCategory = new SkillCategoryModel { Id = 1, Name = "Test"};
+            var skillCategory = new SkillCategoryModel { Id = 1, Name = "Test" };
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(x => x.SkillCategoryRepository.Update(It.IsAny<SkillCategory>()));
             var skillCategoryService = new SkillCategoryService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());

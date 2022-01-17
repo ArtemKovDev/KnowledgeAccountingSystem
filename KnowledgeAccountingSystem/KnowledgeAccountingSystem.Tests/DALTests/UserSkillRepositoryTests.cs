@@ -2,10 +2,8 @@
 using DAL.Entities;
 using DAL.Repositories;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KnowledgeAccountingSystem.Tests.DALTests
@@ -88,7 +86,8 @@ namespace KnowledgeAccountingSystem.Tests.DALTests
             await context.SaveChangesAsync();
 
             Assert.That(userSkill, Is.EqualTo(
-                new UserSkill {
+                new UserSkill
+                {
                     Id = 1,
                     UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                     SkillId = 6,
