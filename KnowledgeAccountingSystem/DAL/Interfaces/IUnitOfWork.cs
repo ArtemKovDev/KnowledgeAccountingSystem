@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
     /// <summary>
     /// Defines properties for accessing repositories and method SaveAsync
     /// </summary>
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         /// <summary>
         /// Return SkillRepository instance
